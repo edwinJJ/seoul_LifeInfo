@@ -50,7 +50,7 @@ public class HomeController {
 
     @RequestMapping(value = "/test", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody String setDepartment(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	
+    	System.out.println("안녕하세요");
     	manager.setData(data);
     	
     	return "bye";
