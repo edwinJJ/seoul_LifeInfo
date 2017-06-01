@@ -95,18 +95,20 @@ public class LoginController extends Applet {
 		String nameInBrowser = (String) session.getAttribute("name");
 		String Name;
 		
-	if(nameInBrowser==null||nameInBrowser.equals("")){
-		session.setAttribute("name", controllerName);
-	     Name = (String) session.getAttribute("name");
-	    controllerName = "" ;
-	}else{
-		Name = nameInBrowser;
-	}
+		if(nameInBrowser==null||nameInBrowser.equals("")){
+			session.setAttribute("name", controllerName);
+		     Name = (String) session.getAttribute("name");
+		    controllerName = "" ;
+		}else{
+			Name = nameInBrowser;
+		}
 	
 		if(Name==null||Name.equals("")){
-		session.removeAttribute("name");	
-			return "logError";}
-		else{ return "main";}
+			session.removeAttribute("name");	
+			return "logError";
+		} else { 
+			return "main";
+		}
 
 	    
 	}	

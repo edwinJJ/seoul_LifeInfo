@@ -1,11 +1,18 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" session="true"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
-  <head>
-    <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>seoul life information</title>
-  </head>
-  <script>
+<head>
+		<spring:url value="/resources/css/main.css" var="mainCSS" />
+		<link href="${mainCSS}" rel="stylesheet" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<title>seoul life information</title>
+</head>
+<script>
  	function join() {
  		var data1 = $("#id").val();
  		var data2 = $("#password").val();
@@ -35,6 +42,16 @@
  	}
   </script>
   <body>
+  			<header>
+						<h1><a href="/info" style="text-decoration:none ">Seoul Life Information</a></h1>
+			</header>
+			<nav style="display: inline;">
+		   			<ul>지하철</ul>
+		   			<ul>버스</ul>
+		   			<ul>날씨</ul>
+		   			<ul>미세먼지</ul>
+		   			<ul>게시판</ul>
+			</nav>
   <p>ID: <input id='id' name='id' type='text' placeholder='ID'></p>
   <p>password: <input id='password' name='password' type='text' placeholder='PASSWORD'></p>
   <p>닉네임: <input id='name'  type='text' placeholder='name'></p>
@@ -45,3 +62,12 @@
   
   </body>
 </html>
+
+
+
+
+
+
+
+
+

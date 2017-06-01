@@ -56,7 +56,7 @@
 		   			<ul>버스</ul>
 		   			<ul>날씨</ul>
 		   			<ul>미세먼지</ul>
-		   			<ul></ul>
+		   			<ul>게시판</ul>
 			</nav>
 			<article>
 					<div id="logIn">			
