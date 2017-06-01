@@ -21,9 +21,9 @@
 	<bean id="dataSource" 
 	     class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	     <property name="driverClassName" value="org.postgresql.Driver"/>
-	     <property name="url" value="jdbc:postgresql://localhost:5433/seoul_LifeInfo"/>
+	     <property name="url" value="jdbc:postgresql://localhost:5432/seoul_LifeInfo"/>
 	     <property name="username" value="postgres"/>
-	     <property name="password" value="123456"/>
+	     <property name="password" value="jbj159951"/>
 	</bean>
 	
 	<!-- mybatis setting -->
