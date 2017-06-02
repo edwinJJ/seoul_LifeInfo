@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.seoul.info.manager.impl.LoginManagerImpl;
 import com.seoul.info.model.LoginModel;
@@ -52,7 +53,7 @@ public class LoginController extends Applet {
 * ------------------------------------------------------------------------------------------------------
 */		
 		@RequestMapping(value = "/", method = RequestMethod.GET)
-		public String home(Model model) {
+		public String home() {
 			return "main";
 		}	
 /*-------------------------------------------------------------------------------------------------------
@@ -60,12 +61,12 @@ public class LoginController extends Applet {
  * ------------------------------------------------------------------------------------------------------
  */
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String home() {
+	public String join() {
 		return "join";
 	}
 	
 	@RequestMapping(value = "/join", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
-    public @ResponseBody String join(@RequestBody Map<String, String> joinData, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody boolean join(@RequestBody Map<String, String> joinData, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	
     	loginModel.setId(joinData.get("id"));
     	loginModel.setPassword(joinData.get("password"));
@@ -74,9 +75,9 @@ public class LoginController extends Applet {
     	loginModel.setPhoneNumber(joinData.get("phoneNumber"));
     	loginModel.setAddress(joinData.get("address"));
     	
-    	manager.setJoin(loginModel);
+    	boolean result = manager.setJoin(loginModel);
     	
-    	return null;
+    	return result;
     }
 /*-------------------------------------------------------------------------------------------------------
  * 	LOGIN PAGE
@@ -84,8 +85,8 @@ public class LoginController extends Applet {
  */
 	@RequestMapping(value = "/logIn", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody String logIn(@RequestBody Map<String, String> logData, HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	manager.setLog(logData);
-    	return null;
+    	String name = manager.setLog(logData); //name
+    	return name;
     }
     
 	@RequestMapping(value = "/main", method = RequestMethod.GET)

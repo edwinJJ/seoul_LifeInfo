@@ -39,18 +39,18 @@ public class LoginManagerImpl implements LoginManager{
 	}
 
 	@Override
-	public String setJoin(LoginModel joinData) throws Exception {
+	public boolean setJoin(LoginModel joinData) throws Exception {
 
-		dao.setJoin(joinData);
-		return null;
+		boolean result = dao.setJoin(joinData);
+		return result;
 	}
 	
 	
 	@Override
 	public String setLog(Map<String, String> logData) throws Exception {
 
-		dao.setLog(logData);
-		return null;
+		String name = dao.setLog(logData); //name
+		return name;
 	}
 	
 	@Override
