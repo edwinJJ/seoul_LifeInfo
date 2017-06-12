@@ -1,24 +1,4 @@
 @CHARSET "UTF-8";
-body {
-	background-color: skyblue;
-}
-h1 {
-	
-	color: white;
-	font-family: dax;
-	}
-	
-#logIn {
-	background-color: #9DF0E1;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-right: 10px;
-	
-	 border:1px black solid;
-	float: right;
-}	
-
 #welcome {
 	color: white;
 }
@@ -27,4 +7,10 @@ a:link { color: white; text-decoration: none;}
 a:visited { color: white; text-decoration: none;}
 a:hover { color: white; text-decoration: none;}
 
-nav ul{display:inline; !important}
+#loginButton {
+    background-color: white;
+    color: skyblue;
+    border-color: white;
+}
+
+nav ul{display:inline;}

@@ -6,10 +6,11 @@
 
 <html>
 <head>
-		<spring:url value="/resources/css/main.css" var="mainCSS" />
-		<link href="${mainCSS}" rel="stylesheet" />
+		<spring:url value="/resources/css/board.css" var="boardCSS" />
+		<link href="${boardCSS}" rel="stylesheet" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery.form.js"></script>
 		<title>seoul life information</title>
 </head>
 	<script>
@@ -19,6 +20,8 @@
 					if(sessionStorage.getItem('name')){
 						Name = sessionStorage.getItem('name');
 					}else{
+						alert('로그인을 해야합니다.');
+						location.replace("/info/main/board/login");
 					}				
 					
 					function log() {
@@ -27,7 +30,7 @@
 					 		
 							$.ajax({
 										type: 'POST',
-										url: "logIn",
+										url: "/info/logIn",
 										headers:{
 											"Content-Type" : "application/json",
 											"X-HTTP-Method-Override":"POST",
@@ -37,7 +40,7 @@
 											{id : data1, password : data2}		
 										),
 										success : function(result) {
-											console.log(result);
+											
 											if(result==null || result==""){
 												location.replace("/info/logError"); 
 											}else{
@@ -56,6 +59,47 @@
 					function logout() {
 										sessionStorage.clear();
 										location.replace("/info");
+					}
+					
+					
+					function insert() {
+						console.log("write()실행");
+						
+				 		var data1 = $("#title").val();
+				 		var data2 = $("#description").val();
+				 		var data3 = Name;
+				 		
+						$.ajax({
+							type: 'POST',
+							url: "/info/main/board/write",
+							headers:{
+								"Content-Type" : "application/json",
+								"X-HTTP-Method-Override":"POST",
+							},
+							dataType: 'text',
+							data: JSON.stringify(
+								{title: data1, description: data2, author: data3}		
+							),
+							success : function(result) {
+								if(result == "true") {
+									alert("게시글 작성이 완료되었습니다.");
+									location.replace("/info/main/board/1");
+								} else {
+									alert("게시글 작성 실패");
+								}
+							},
+							error : function(result){
+								alert("error");
+							}			
+						});
+				 	}
+					
+					
+					function test() {
+						 	$('#ajaxform').ajaxForm({  beforeSubmit: function (data, frm, opt) { alert("전송전!!"); return true; },  
+							 							success: function(responseText, statusText){ alert("전송성공!!"); },  
+							 							error: function(){ alert("에러발생!!"); } 
+							 });
 					}
 													
 	</script>
@@ -90,6 +134,12 @@
 				       	}    
 			</script>	
 		</div>
+		<h1 style="color: white;">자유게시판</h1>
+		<p>작성자:<script>document.write(Name);</script></p>
+		<p>제목: <input type='text' id='title'></p>
+		<p>첨부파일 <input type='file' id='file'></p>
+		<p>본문: <input type='text' id='description'></p>
+		<p><input type='button' value="작성" onclick='insert();'></p>
 	</article>  
 </body>
 </html>

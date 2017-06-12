@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.seoul.info.mappers.boardMapper">
+
+    <insert id="boardInsert" >
+      insert into board(number, author, created, title, description) 
+      values( default, #{author}, default, #{title}, #{description})
+   </insert>
+   
+   <select id="boardSelect" resultType="hashmap">
+    select title, author, created, likes from board where number=#{number};
+   </select>
+   
+   <select id="boardCheck" resultType="java.lang.Integer">
+      SELECT Count(number) FROM board;
+   </select>
+   
+   <select id="boardArticleSelect" resultType="hashmap">
+    select * from board where number=#{number};
+   </select>
+   
+    <update id="boardLikeUpdate" >
+    UPDATE board SET likes= likes+1 WHERE number=#{articleNum};
+   </update>
+   
+   <insert id="boardNameAlter">
+   ALTER TABLE board ADD "#{name}" int;
+	</insert>
+</mapper>

@@ -27,14 +27,15 @@
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override":"POST",
 			},
-			dataType:'JSON',
+			dataType: 'text',
 			data: JSON.stringify(
 				{id : data1, password : data2, name : data3, birth : data4, 
 					phoneNumber : data5, address : data6}		
 			),
 			success : function(result) {
-				if(result) {
+				if(result == "true") {
 					alert("회원가입이 완료되었습니다.");
+					location.replace("/info");
 				} else {
 					alert("회원가입 실패");
 				}
@@ -43,8 +44,6 @@
 				alert("error");
 			}			
 		});
-		
-		document.location.href="/info";
  	}
   </script>
   <body>
@@ -63,7 +62,7 @@
   <p>닉네임: <input id='name'  type='text' placeholder='name'></p>
   <p>생년월일: <input id='birth'  type='text' placeholder='birth'></p>
   <p>전화번호: <input id='phoneNumber' type='text' placeholder='phoneNumber'></p>
-  <p>집 주소: <input id='address' type='text' ></p>
+  <p>집 주소: <input id='address' type='text' placeholder='address'></p>
   <input type='button' value='done' onclick="join();">
   
   </body>

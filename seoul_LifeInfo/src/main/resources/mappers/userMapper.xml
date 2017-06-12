@@ -21,4 +21,7 @@
    <select id="usersName" parameterType="String" resultType="String" >
       select name from logIn where id = #{value}  
    </select>
+   
+   
+   
 </mapper>

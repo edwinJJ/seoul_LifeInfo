@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+a:link { color: white; text-decoration: none;}
+a:visited { color: white; text-decoration: none;}
+a:hover { color: white; text-decoration: none;}
+
+#Lists a:hover{ color: black; }
+
+nav ul{display:inline;}
+
+#ListsNum ul{display:inline;}
+
+#loginButton {
+    background-color: white;
+    color: skyblue;
+    border-color: white;
+}
+
+#writeButton {
+	    background-color: skyblue;
+	    border-color: whitesmoke;
+	    border-left-width: 2px;
+	    padding-left: 250px;
+	    padding-right: 250px;
+	    border-right-width: 2px;
+	    border-bottom-width: 2px;
+	    border-top-width: 2px;
+	    color: white;
+	    font-size: 15px;
+	    border-radius: 5px;
+	    cursor: pointer
+}

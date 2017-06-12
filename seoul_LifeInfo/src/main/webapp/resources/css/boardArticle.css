@@ -1,0 +1,164 @@
+@CHARSET "UTF-8";
+
+a:link { color: white; text-decoration: none;}
+a:visited { color: white; text-decoration: none;}
+a:hover { color: white; text-decoration: none;}
+
+#Lists a:hover{ color: black; }
+
+nav ul{display:inline;}
+
+#ListsNum ul{display:inline;}
+
+#loginButton {
+    background-color: white;
+    color: skyblue;
+    border-color: white;
+}
+
+#writeButton {
+	    background-color: skyblue;
+	    border-color: whitesmoke;
+	    border-left-width: 2px;
+	    padding-left: 250px;
+	    padding-right: 250px;
+	    border-right-width: 2px;
+	    border-bottom-width: 2px;
+	    border-top-width: 2px;
+	    color: white;
+	    font-size: 15px;
+	    border-radius: 5px;
+	    cursor: pointer
+}
+
+
+
+
+.hearty {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  position: relative;
+  border: none;
+  font: normal 100%/normal Arial, Helvetica, sans-serif;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+   width: 50px;
+   margin-left: 0px;
+   padding-left: 80px;
+   height: 60px;
+   padding-top: 10px;
+   color: white;
+   font-size: 40px;
+}
+
+body.white div.hearty::before {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 20px;
+  height: 32px;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 50px;
+  border: none;
+  -webkit-border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 0 0;
+  font: normal 100%/normal Arial, Helvetica, sans-serif;
+  color: rgba(0,0,0,1);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: white;
+  text-shadow: none;
+  -webkit-transform: rotateZ(-45deg)  translateX(-15px) translateY(3px) skewX(1deg);
+  transform: rotateZ(-45deg)  translateX(-15px) translateY(3px) skewX(1deg);
+  -webkit-transform-origin: -38px 100% 0deg;
+  transform-origin: -38px 100% 0deg;
+}
+
+body.white div.hearty::after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 20px;
+  height: 32px;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  border: none;
+  -webkit-border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 0 0;
+  font: normal 100%/normal Arial, Helvetica, sans-serif;
+  color: rgba(0,0,0,1);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: white;
+  text-shadow: none;
+  -webkit-transform: rotateZ(45deg)  translateX(44px) translateY(-26px) ;
+  transform: rotateZ(45deg)  translateX(44px) translateY(-26px) ;
+  -webkit-transform-origin: 100% 100% 0deg;
+  transform-origin: 100% 100% 0deg;
+}
+.hearty:hover {
+  cursor: pointer;
+}
+.heaaty::after:active {
+}
+
+
+
+body.red div.hearty::before {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 20px;
+  height: 32px;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 50px;
+  border: none;
+  -webkit-border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 0 0;
+  font: normal 100%/normal Arial, Helvetica, sans-serif;
+  color: rgba(0,0,0,1);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: red;
+  text-shadow: none;
+  -webkit-transform: rotateZ(-45deg)  translateX(-15px) translateY(3px) skewX(1deg);
+  transform: rotateZ(-45deg)  translateX(-15px) translateY(3px) skewX(1deg);
+  -webkit-transform-origin: -38px 100% 0deg;
+  transform-origin: -38px 100% 0deg;
+}
+
+body.red div.hearty::after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 20px;
+  height: 32px;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  border: none;
+  -webkit-border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 0 0;
+  font: normal 100%/normal Arial, Helvetica, sans-serif;
+  color: rgba(0,0,0,1);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: red;
+  text-shadow: none;
+  -webkit-transform: rotateZ(45deg)  translateX(44px) translateY(-26px) ;
+  transform: rotateZ(45deg)  translateX(44px) translateY(-26px) ;
+  -webkit-transform-origin: 100% 100% 0deg;
+  transform-origin: 100% 100% 0deg;
+}
+                                                           
+
+
+

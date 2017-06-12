@@ -56,7 +56,7 @@ public class LoginManagerImpl implements LoginManager{
 	@Override
 	public String getLog(String name) throws Exception {
 
-		controller.getLog(name);
+		
 		return null;
 	}
 	

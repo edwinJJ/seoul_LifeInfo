@@ -18,7 +18,7 @@
 		 		
 				$.ajax({
 							type: 'POST',
-							url: "logIn",
+							url: "/info/logIn",
 							headers:{
 								"Content-Type" : "application/json",
 								"X-HTTP-Method-Override":"POST",
@@ -33,7 +33,7 @@
 									location.replace("/info/logError"); 
 								}else{
 									sessionStorage.setItem('name', result);
-									location.replace("/info")
+									location.replace("/info/main/board/write")
 								}
 							},
 							error : function(result){
@@ -47,7 +47,6 @@
        <div id="header"></div><h1><a href="/info" style="text-decoration:none ">Seoul Life Information</a></h1></div>			
 			<p><input id='id' type='text' placeholder='ID'></p>
 			<p><input id='password' type='text' placeholder='PASSWORD'></p>
-			<h5>등록된 아이디가 없거나 비밀번호가 틀렸습니다.</h5>
 			<input type='button' value='log in' onclick='log();'>
 			<a href='http://localhost:9999/info/join'>join us</a>
 </body>

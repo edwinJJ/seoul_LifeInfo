@@ -40,7 +40,6 @@ public class LoginDaoImpl implements LoginDao{
 			result = true;
 		} catch(Exception e) {
 			e.printStackTrace();
-			result = false;
 		}
 		
 		return result;
@@ -57,8 +56,6 @@ public class LoginDaoImpl implements LoginDao{
 		    name = session.selectOne(namespace + ".usersName", id);
 		}else{
 		}
-		
-		
 		return name;
 	}
 }
