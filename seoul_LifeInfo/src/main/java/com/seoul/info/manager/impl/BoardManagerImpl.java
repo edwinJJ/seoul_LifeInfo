@@ -32,6 +32,8 @@ public class BoardManagerImpl implements BoardManager{
 		return result;
 	}
 	
+	
+	
 	@Override
 	public Map getLists(Map<String, Integer> boardData) throws Exception {
 
@@ -53,6 +55,13 @@ public class BoardManagerImpl implements BoardManager{
 		return article;
 	}
 	
+	@Override
+	public Map getArticleForUpdate(Map<String, Integer> articleNumber) throws Exception {
+
+		Map article = dao.getArticleForUpdate(articleNumber);
+		return article;
+	}
+	
 	
 	@Override
 	public boolean likeUpdate(Map<String, Object> likeData) throws Exception {
@@ -62,4 +71,54 @@ public class BoardManagerImpl implements BoardManager{
 	}
 	
 	
+	
+	@Override
+	public boolean likeCancel(Map<String, Object> likeData) throws Exception {
+
+		boolean result = dao.likeCancel(likeData);
+		return result;
+	}
+	
+	@Override
+	public boolean setReply(Map<String, Object> replyData) throws Exception {
+
+		boolean result = dao.setReply(replyData);
+		return result;
+	}
+	
+	@Override
+	public Map getReplies(Map<String, Integer> articleNumber) throws Exception {
+
+		Map replies = dao.getReplies(articleNumber);
+		return replies;
+	}
+
+	@Override
+	public boolean setReplyToReply(Map<String, Object> replyInReplyData) throws Exception {
+
+		boolean result = dao.setReplyToReply(replyInReplyData);
+		return result;
+	}
+	
+	
+	@Override
+	public boolean deleteArticle(Map<String, Object> articleNumber) throws Exception {
+
+		boolean result = dao.deleteArticle(articleNumber);
+		return result;
+	}
+	
+	@Override
+	public boolean deleteReply(Map<String, Object> replyNumber) throws Exception {
+
+		boolean result = dao.deleteReply(replyNumber);
+		return result;
+	}
+	
+	@Override
+	public boolean updateArticle(Map<String, Object> updateData) throws Exception {
+
+		boolean result = dao.updateArticle(updateData);
+		return result;
+	}
 }

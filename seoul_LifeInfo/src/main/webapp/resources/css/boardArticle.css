@@ -10,7 +10,7 @@ nav ul{display:inline;}
 
 #ListsNum ul{display:inline;}
 
-#loginButton {
+.logButton {
     background-color: white;
     color: skyblue;
     border-color: white;
@@ -107,8 +107,6 @@ body.white div.hearty::after {
 .heaaty::after:active {
 }
 
-
-
 body.red div.hearty::before {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
@@ -158,7 +156,88 @@ body.red div.hearty::after {
   -webkit-transform-origin: 100% 100% 0deg;
   transform-origin: 100% 100% 0deg;
 }
-                                                           
+
+#replyToReply {
+	font-size:5px;
+	margin-left: 800px;
+	
+}
+
+#replyToReply:hover {
+    cursor:pointer	
+}
+
+#replyButton{
+	border-color: white;
+    border-radius: 3px;
+    background-color: white;
+    color: skyblue;
+    width: 80px;
+    height: 60px;
+    margin-left: 10px;
+    margin-top: 3px;
+	
+}
+
+#replyDesc {
+	float: left;
+}
+
+.replyButton{
+	border-color: white;
+    border-radius: 3px;
+    background-color: white;
+    color: skyblue;
+    width: 80px;
+    height: 60px;
+    margin-left: 10px;
+    margin-top: 3px;
+	
+}
+
+.replyDesc {
+	width: 600px;
+	height: 60px; 
+	margin-left: 40px;
+	font-size: 15px;
+}
+
+.replyToReplyDesc {
+	width: 600px;
+	height: 60px; 
+	font-size: 15px;
+}
+
+#logIn {
+	float: right;
+	color: white;
+}
+
+#articleDescription {
+	color: white; 
+	background-color: skyblue; 
+	border: 5px solid white; 
+	padding-left: 10px; 
+	padding-top: 10px; 
+	padding-bottom: 50px;
+}
+
+#replyLists {
+	margin-left: 40px;
+	margin-top: 10px;    
+	margin-bottom: 100px;
+}
+
+#reply {
+	margin-bottom: 5px;
+	border: 2px white solid;
+	padding-right: 10px;
+	margin-right: 300px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
+
 
 
 

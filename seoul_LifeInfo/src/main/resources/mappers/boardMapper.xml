@@ -11,7 +11,7 @@
    </insert>
    
    <select id="boardSelect" resultType="hashmap">
-    select title, author, created, likes from board where number=#{number};
+    select number, title, author, created from board order by number offset ${offset} limit ${keyForLastPage};
    </select>
    
    <select id="boardCheck" resultType="java.lang.Integer">
@@ -19,14 +19,99 @@
    </select>
    
    <select id="boardArticleSelect" resultType="hashmap">
-    select * from board where number=#{number};
+    select number, author, created, modified, title, description from board where number=#{number};
+   </select>
+   
+   <select id="boardArticleSelectForUpdate" resultType="hashmap">
+    select title, description from board where number=#{number};
+   </select>
+   
+    <select id="boardArticleLikesSelect" resultType="hashmap">
+    select likes[#{likesNumber}] from board where number=#{number};
+   </select>
+   
+   <select id="boardNumberOfLikesSelect" resultType="hashmap">
+    select array_upper(likes, 1) from board order by number offset ${offset} limit ${keyForLastPage};
+   </select>
+   
+   <select id="boardArticleNumberOfLikesSelect" resultType="hashmap">
+    select array_upper(likes, 1) from board where number= ${number};
    </select>
    
     <update id="boardLikeUpdate" >
-    UPDATE board SET likes= likes+1 WHERE number=#{articleNum};
-   </update>
+    UPDATE board SET likes[#{like}]=#{name} WHERE number=#{number};
+    </update>
+    
+    <update id="boardFirstLikeUpdate" >
+    UPDATE board SET likes='{${name}}' WHERE number=${number};
+    </update>
    
-   <insert id="boardNameAlter">
-   ALTER TABLE board ADD "#{name}" int;
+  	<update id="boardLikeCancelUpdate" >
+    UPDATE board SET likes =array_remove(likes , '${name}') WHERE number=${number};
+    </update>
+    
+    <insert id="boardReplyInsert" >
+      insert into reply(number, name, description, location) 
+      values( default, #{name}, #{reply}, '{${number}}')
+   	</insert>
+   
+   
+   
+   
+   
+   
+   
+   <select id="boardReplyNumberOfLocationSelect" resultType="hashmap">
+    select array_upper(location, 1) from reply where number=${replyNum};
+   </select>
+  
+   <select id="boardRightReplyNumberSelect" resultType="hashmap">
+    select number from reply where location[1]=${number};
+   </select>
+   
+   <select id="boardReplyRightLocationSelect" resultType="hashmap">
+    select location[${l}] from reply where number=${replyNum};
+   </select>
+   
+   <select id="boardReplySelect" resultType="hashmap">
+    select number, name, description from reply where number=${replyNum}
+   </select>
+   
+   
+   
+    <select id="superReplyLocationSelect" resultType="hashmap">
+    select location[${i}] from reply where number=${replyNum};
+   </select>
+   
+   
+
+   	
+ 
+
+	<insert id="boardReplyToReplyInsert">
+	
+	     insert into reply(number, name, description, location) 
+	      values( default, '${userName}', '${reply}', '${newLocation}') 
+	
 	</insert>
+
+
+    <delete id="boardArticleDelete" >
+    delete from board where number=#{number}
+    </delete>
+    
+    <delete id="boardArticleReplyDelete" >
+    delete from reply where location[1]=#{number}
+    </delete>
+   
+   <delete id="boardReplyDelete" >
+    delete from reply where number=#{number}
+    <!-- select * from reply where location[1:2] = '{6,3}' -->
+    </delete>
+    
+    <update id="boardArticleUpdate" >
+    UPDATE board SET title='${title}', description='${description}' WHERE number=${number};
+    </update>
+   
+    
 </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -16,7 +17,7 @@
 </head>
 	<script>
 					var Name = "";
-					var logoutButton = "<p><input type='button' value='log out' onclick='logout();' style='background-color: white; color:skyblue;'></p>"
+					var logoutButton = "<p><input type='button' class='logButton' value='log out' onclick='logout();'></p>"
 					var ListsNum;
 					var Lists;
 					
@@ -124,18 +125,12 @@
 					
 					
 					
-					
 	</script>
-<body style="background-color: skyblue;">
+<body >
 	<header>
-			<a href="/info" style="color: white;
-								   font-family: fantasy;
-								   font-size: 50px; 	
-								   text-decoration:none;
-								   padding-left: 40px;
-								   padding-top:10px;">Seoul Life Information</a>
+			<a href="/info" id='header'>Seoul Life Information</a>
 	</header>
-	<nav style="color:white;">
+	<nav>
 			   <ul>지하철</ul>
 			   <ul>버스</ul>
 			   <ul>날씨</ul>
@@ -143,12 +138,12 @@
 			   <ul><a href="/info/main/board/1">게시판</a></ul>
 	</nav>
 	<article>
-		<div id="logIn" style="float: right;color: white;">			
+		<div id="logInBlock">			
 			<script>
 						if(Name == ""){  
 								var	lines = "<p><input id='id' type='text' placeholder='ID'></p>";
 									lines += "<p><input id='password' type='text' placeholder='PASSWORD'></p>";
-									lines += "<input id='loginButton' type='button' value='log in' onclick='log();'>";
+									lines += "<input class='logButton' type='button' value='log in' onclick='log();'>";
 									lines += "&nbsp; <a href='http://localhost:9999/info/join'>join us</a>";				
 						   		document.write(lines);
 				      	}
@@ -160,13 +155,48 @@
 			
 		<h1 style="color: white;">자유게시판</h1>
 		
-		<ul style="list-style: none; font-size: 23px;padding-left: 200px; color: aliceblue;">
-		<li style="color: black;">Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;author&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like</li>
-		<li><input id="writeButton" type="button" onclick="location.replace('/info/main/board/write')" value="+"></li>
-		<script>
-		//Lists.sort(function(a,b){return (a.value < b.value)? -1:(a.value>b.value)? 1:0;}); // 정렬 반대로
-		for(var objVarName in Lists) { document.write("<li><a id='Lists' href='/info/main/board/article/" + objVarName + "'>&nbsp;&nbsp;&nbsp;&nbsp;" + objVarName + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"); for(var cul in Lists[objVarName]){document.write( Lists[objVarName][cul] + "&nbsp;&nbsp;&nbsp;&nbsp;");} document.write("</a></li>");}
-		</script>
+		<ul id='boardList'>
+			
+			<script>
+			var Numbers = [];
+			for(var number in Lists) { Numbers.push(number); }
+			Numbers.reverse();
+			
+			document.write("<div class='listBlock'>");
+			document.write("<li style='color: black;'>Number<li>");
+			for(var number in Numbers){
+				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Numbers[number] + "</a></li>"); 
+			}
+			document.write("</div>");
+			document.write("<div class='listBlock'>");
+			document.write("<li style='color: black;'>Author<li>");
+			for(var number in Numbers){
+				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["author"] + "</a></li>"); 
+			}
+			document.write("</div>");
+			
+			document.write("<div class='listBlock'>");
+			document.write("<li style='color: black;'>Title<li>");
+			for(var number in Numbers){
+				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["title"] + "</a></li>"); 
+			}
+			document.write("</div>");
+			document.write("<div class='listBlock'>");
+			document.write("<li style='color: black;'>Created<li>");
+			for(var number in Numbers){
+				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["created"] + "</a></li>"); 
+			}
+			document.write("</div>");
+			
+			document.write("<div class='listBlock'>");
+			document.write("<li style='color: black;'>Likes<li>");
+			for(var number in Numbers){
+				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["likes"] + "</a></li>"); 
+			}
+			document.write("</div>");
+			
+			
+			</script>
 		</ul>
 		
 		<div id="ListsNum">
@@ -176,7 +206,7 @@
 			for(var i=1; i<=(ListsNum2+1); i++){document.write("<ul><a href='/info/main/board/"+i+"'>"+i+"</a></ul>");}
 			</script>
 		</div>
-		
+		<a onclick="location.replace('/info/main/board/write')" style='float:left'>+ new</a>
 	</article>  
 </body>
 </html>

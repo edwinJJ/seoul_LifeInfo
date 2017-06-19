@@ -93,7 +93,21 @@ public class BoardController extends Applet {
 		return "boardLogin";
 		
 	}	
-
+/*-------------------------------------------------------------------------------------------------------
+* 	게시글 수정
+* ------------------------------------------------------------------------------------------------------
+*/	
+	
+	@RequestMapping(value = "/main/board/updateArticle", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+    public @ResponseBody String updateArticle(@RequestBody Map<String, Object> updateData, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+    	boolean result = manager.updateArticle(updateData);
+    	String bool;
+    	if(result){bool = "true";}
+    	else{bool = "false";}
+    	return bool;
+    }
+		
 
 	
 	
@@ -117,7 +131,7 @@ public class BoardController extends Applet {
 */	
 	@RequestMapping(value = "/getLists", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody Map getLists(@RequestBody Map<String, Integer> boardData, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map<Integer, Object> Lists = manager.getLists(boardData);
+		Map<Object, Object> Lists = manager.getLists(boardData);
 		return Lists;
     }
 	
@@ -137,7 +151,13 @@ public class BoardController extends Applet {
 		
 		@RequestMapping(value = "/getArticle", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
 	    public @ResponseBody Map getArticle(@RequestBody Map<String, Integer> articleNumber, HttpServletRequest request, HttpServletResponse response) throws Exception {
-			Map<String, String> article = manager.getArticle(articleNumber);
+			Map<String, Object> article = manager.getArticle(articleNumber);
+			return article;
+	    }
+		
+		@RequestMapping(value = "/getArticleForUpdate", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+	    public @ResponseBody Map getArticleForUpdate(@RequestBody Map<String, Integer> articleNumber, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			Map<String, Object> article = manager.getArticleForUpdate(articleNumber);
 			return article;
 	    }
 		
@@ -145,19 +165,111 @@ public class BoardController extends Applet {
 		
 		
 		
-/*-------------------------------------------------------------------------------------------------------
-* 	좋아요 저장 
-* ------------------------------------------------------------------------------------------------------
-*/	
-		@RequestMapping(value = "/likeUpdate", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
-	    public @ResponseBody String likeUpdate(@RequestBody Map<String, Object> likeData, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	
-	    	boolean result = manager.likeUpdate(likeData);
-	    	String bool;
-	    	if(result){bool = "true";}
-	    	else{bool = "false";}
-	    	return bool;
-	    }
-		
+	/*-------------------------------------------------------------------------------------------------------
+	* 	좋아요 저장 
+	* ------------------------------------------------------------------------------------------------------
+	*/	
+			@RequestMapping(value = "/likeUpdate", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+		    public @ResponseBody String likeUpdate(@RequestBody Map<String, Object> likeData, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		    	
+		    	boolean result = manager.likeUpdate(likeData);
+		    	String bool;
+		    	if(result){bool = "true";}
+		    	else{bool = "false";}
+		    	return bool;
+		    }
+			
+	/*-------------------------------------------------------------------------------------------------------
+	* 	좋아요 취소 
+	* ------------------------------------------------------------------------------------------------------
+	*/	
+					@RequestMapping(value = "/likeCancel", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+				    public @ResponseBody String likeCancel(@RequestBody Map<String, Object> likeData, HttpServletRequest request, HttpServletResponse response) throws Exception {
+				    	
+				    	boolean result = manager.likeCancel(likeData);
+				    	String bool;
+				    	if(result){bool = "true";}
+				    	else{bool = "false";}
+				    	return bool;
+				    }
+					
+				
+					
+	/*-------------------------------------------------------------------------------------------------------
+	* 	댓글 저장
+	* ------------------------------------------------------------------------------------------------------
+	*/	
+					@RequestMapping(value = "/setReply", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+					public @ResponseBody String setReply(@RequestBody Map<String, Object> replyData, HttpServletRequest request, HttpServletResponse response) throws Exception {
+						    	
+						    	boolean result = manager.setReply(replyData);
+						    	String bool;
+						    	if(result){bool = "true";}
+						    	else{bool = "false";}
+						    	return bool;
+						    }				
+	/*-------------------------------------------------------------------------------------------------------
+	* 	댓글 가져오기 
+	* ------------------------------------------------------------------------------------------------------
+	*/	
+							
+					@RequestMapping(value = "/getReplies", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+				    public @ResponseBody Map getReplies(@RequestBody Map<String, Integer> articleNumber, HttpServletRequest request, HttpServletResponse response) throws Exception {
+						Map<Integer, Object> replies = manager.getReplies(articleNumber);
+						return replies;
+				    }		
+	/*-------------------------------------------------------------------------------------------------------
+	* 	댓글의 댓글 저장 
+	* ------------------------------------------------------------------------------------------------------
+	*/	
+					@RequestMapping(value = "/setReplyToReply", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+					public @ResponseBody String setReplyToReply(@RequestBody Map<String, Object> replyInReplyData, HttpServletRequest request, HttpServletResponse response) throws Exception {
+						    	
+						    	boolean result = manager.setReplyToReply(replyInReplyData);
+						    	String bool;
+						    	if(result){bool = "true";}
+						    	else{bool = "false";}
+						    	return bool;
+						    }	
+	/*-------------------------------------------------------------------------------------------------------
+     * 게시글 삭제
+     * ------------------------------------------------------------------------------------------------------
+     */	
+				@RequestMapping(value = "/deleteArticle", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+				public @ResponseBody String deleteArticle(@RequestBody Map<String, Object> articleNumber, HttpServletRequest request, HttpServletResponse response) throws Exception {
+					    	
+					    	boolean result = manager.deleteArticle(articleNumber);
+					    	String bool;
+					    	if(result){bool = "true";}
+					    	else{bool = "false";}
+					    	return bool;
+					    }						
+
+	/*-------------------------------------------------------------------------------------------------------
+     * 댓글 삭제
+     * ------------------------------------------------------------------------------------------------------
+     */	
+				@RequestMapping(value = "/deleteReply", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+				public @ResponseBody String deleteReply(@RequestBody Map<String, Object> replyNumber, HttpServletRequest request, HttpServletResponse response) throws Exception {
+					    	
+					    	boolean result = manager.deleteReply(replyNumber);
+					    	String bool;
+					    	if(result){bool = "true";}
+					    	else{bool = "false";}
+					    	return bool;
+					    }				
+
+
+	/*-------------------------------------------------------------------------------------------------------
+     * 	게시판 메인
+    * ------------------------------------------------------------------------------------------------------
+    */	 
+			@RequestMapping(value = "/main/board/updateArticle/{number}", method = RequestMethod.GET)
+			public ModelAndView updateArticleView(@PathVariable("number") int num) {
+					ModelAndView mav = new ModelAndView();
+							mav.setViewName("updateArticle");
+							mav.addObject("articleNumber", num);
+					return mav;
+			}					
 }
 
