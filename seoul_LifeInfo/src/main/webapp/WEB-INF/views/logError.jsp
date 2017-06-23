@@ -33,7 +33,7 @@
 									location.replace("/info/logError"); 
 								}else{
 									sessionStorage.setItem('name', result);
-									location.replace("/info")
+									location.replace("/info/1")
 								}
 							},
 							error : function(result){
@@ -44,11 +44,14 @@
 		}
 </script>	
 		
-       <div id="header"></div><h1><a href="/info" style="text-decoration:none ">Seoul Life Information</a></h1></div>			
-			<p><input id='id' type='text' placeholder='ID'></p>
-			<p><input id='password' type='text' placeholder='PASSWORD'></p>
+       <div id="header"><h1><a href="/info/1" style="text-decoration:none ">Seoul Life Information</a></h1></div>		
+       		<div id='logInDiv'>		
+				<input class='logButton' type='button' value='log in' onclick='log();'>
+				<input id='id' type='text' placeholder='ID'><br/>
+				<input id='password' type='text' placeholder='PASSWORD'><br/>
+				<a href='/info/join'>join us</a>
+			</div>
 			<h5>등록된 아이디가 없거나 비밀번호가 틀렸습니다.</h5>
-			<input type='button' value='log in' onclick='log();'>
-			<a href='http://localhost:9999/info/join'>join us</a>
+			
 </body>
 </html>
