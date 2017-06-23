@@ -3,7 +3,7 @@ html {
 	margin-top: 200px;
 }
 body {
-	
+	    margin-right: 476px;
 	margin-left: 38%;
 	background-color: skyblue;
 }
@@ -28,11 +28,48 @@ nav ul{display:inline; !important}
 	padding-right: auto;
 }
 
-#id { background-color: skyblue;}
-#password { background-color: skyblue;}
 
 
 
 
+#id {
+	background-color : skyblue;
+	float: right;
+	height: 24px;
+    border-color: white;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+
+#password {
+	background-color : skyblue;
+	float: right;
+	height: 24px;
+   border-color: white;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+	
+.logButton {
+	 margin-top: 0px;
+    height: 53px;
+    margin-left: 5px;
+	float: right;
+	border-color: white;
+    border-radius: 3px;
+    background-color: white;
+    color: skyblue;
+    width: 80px;
+}
+
+#logInDiv {
+	    margin-right: 63px;
+    margin-left: 37px;
+}
 
 
