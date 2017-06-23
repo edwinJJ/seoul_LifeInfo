@@ -36,4 +36,6 @@ public interface BoardManager {
 	
 	public boolean updateArticle(Map<String, Object> updateData) throws Exception;
 
+	Map search(Map<String, String> searchData) throws Exception;
+
 }
