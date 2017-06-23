@@ -2,10 +2,14 @@ package com.seoul.info.controller;
 
 import java.applet.Applet;
 import java.awt.Graphics;
+import java.awt.List;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +30,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seoul.info.manager.impl.BoardManagerImpl;
@@ -76,8 +84,15 @@ public class BoardController extends Applet {
 	@RequestMapping(value = "/main/board/write", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody String insert(@RequestBody Map<String, String> writeData, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	
+		
+		
+		File f = new File("/Users/bill13579/Desktop/filesbase/1");
+		f.mkdir();
+		File serverFile = new File("/Users/bill13579/Desktop/filesbase/1/testFile.pdf"); 
 
+		
 		BoardModel.MembersWrite(writeData.get("title"), writeData.get("description"), writeData.get("author"));
+		
 		
 		
 		
@@ -88,6 +103,36 @@ public class BoardController extends Applet {
     	return bool;
     }
 	
+	
+	@RequestMapping(value = "/main/board/upload1", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+    public @ResponseBody String upload1(
+            @RequestParam("hakbun") String num,
+            @RequestParam("report") MultipartFile file) throws Exception {
+	
+        String filename = file.getOriginalFilename();
+        //실제 파일을 업로드하기 위한 파일 객체 생성
+        File f = new File("/Users/bill13579/Desktop/filesbase/"+num+"_"+filename);
+       
+        /*
+        if(f.exists()){
+            f = new File("/Users/bill13579/Desktop/filesbase/"+num+"_"+filename+"(1)");
+        } */       
+    
+        try {
+            file.transferTo(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+      
+        return "main";
+    }
+
+
+
+
+
+	
+	
 	@RequestMapping(value = "/main/board/login", method = RequestMethod.GET)
 	public String boardLogin() {
 		return "boardLogin";
@@ -97,6 +142,16 @@ public class BoardController extends Applet {
 * 	게시글 수정
 * ------------------------------------------------------------------------------------------------------
 */	
+	
+	@RequestMapping(value = "/main/board/updateArticle/{number}", method = RequestMethod.GET)
+	public ModelAndView updateArticleView(@PathVariable("number") int num) {
+			ModelAndView mav = new ModelAndView();
+					mav.setViewName("updateArticle");
+					mav.addObject("articleNumber", num);
+			return mav;
+	}		
+	
+	
 	
 	@RequestMapping(value = "/main/board/updateArticle", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody String updateArticle(@RequestBody Map<String, Object> updateData, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -259,17 +314,15 @@ public class BoardController extends Applet {
 					    	return bool;
 					    }				
 
-
 	/*-------------------------------------------------------------------------------------------------------
-     * 	게시판 메인
-    * ------------------------------------------------------------------------------------------------------
-    */	 
-			@RequestMapping(value = "/main/board/updateArticle/{number}", method = RequestMethod.GET)
-			public ModelAndView updateArticleView(@PathVariable("number") int num) {
-					ModelAndView mav = new ModelAndView();
-							mav.setViewName("updateArticle");
-							mav.addObject("articleNumber", num);
-					return mav;
-			}					
+	* 	게시판 검색
+	* ------------------------------------------------------------------------------------------------------
+	*/	
+		@RequestMapping(value = "/search", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+	    public @ResponseBody Map search(@RequestBody Map<String, String> searchData) throws Exception {
+			Map<Object, Object> Lists = manager.search(searchData);
+			return Lists;
+	    }
+			
 }
 
