@@ -13,39 +13,45 @@
 <body>
 <script>
 		function log() {
-						 		var data1 = $("#id").val();
-						 		var data2 = $("#password").val();
-						 		
-						 		
-								$.ajax({
-									type: 'POST',
-									url: "logIn",
-									headers:{
-										"Content-Type" : "application/json",
-										"X-HTTP-Method-Override":"POST",
-									},
-									dataType:'JSON',
-									data: JSON.stringify(
-										{id : data1, password : data2}		
-									),
-									success : function(result) {
-									},
-									error : function(result){
-									},
-									async : false
-								});
-								
-								location.href="/info/main";
-						 	}
-						 	
-		function goPage() { location.href="/info/logTest"; }	
+		 		var data1 = $("#id").val();
+		 		var data2 = $("#password").val();
+		 		
+				$.ajax({
+							type: 'POST',
+							url: "logIn",
+							headers:{
+								"Content-Type" : "application/json",
+								"X-HTTP-Method-Override":"POST",
+							},
+							dataType:'text',
+							data: JSON.stringify(
+								{id : data1, password : data2}		
+							),
+							success : function(result) {
+								console.log(result);
+								if(result==null || result==""){
+									location.replace("/info/logError"); 
+								}else{
+									sessionStorage.setItem('name', result);
+									location.replace("/info/1")
+								}
+							},
+							error : function(result){
+								console.log(result);
+								console.log("error!!!!");
+							}
+				});	
+		}
 </script>	
 		
-       <div id="header"></div><h1><a href="/info" style="text-decoration:none ">Seoul Life Information</a></h1></div>			
-			<p><input id='id' type='text' placeholder='ID'></p>
-			<p><input id='password' type='text' placeholder='PASSWORD'></p>
+       <div id="header"><h1><a href="/info/1" style="text-decoration:none ">Seoul Life Information</a></h1></div>		
+       		<div id='logInDiv'>		
+				<input class='logButton' type='button' value='log in' onclick='log();'>
+				<input id='id' type='text' placeholder='ID'><br/>
+				<input id='password' type='text' placeholder='PASSWORD'><br/>
+				<a href='/info/join'>join us</a>
+			</div>
 			<h5>등록된 아이디가 없거나 비밀번호가 틀렸습니다.</h5>
-			<input type='button' value='log in' onclick='log()'>
-			<a href='http://localhost:9999/info/join'>join us</a>
+			
 </body>
 </html>

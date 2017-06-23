@@ -14,8 +14,8 @@
 </head>
 <script>
  	function join() {
- 		var data1 = $("#id").val();
- 		var data2 = $("#password").val();
+ 		var data1 = $("#ide").val();
+ 		var data2 = $("#pass").val();
  		var data3 = $("#name").val();
  		var data4 = $("#birth").val();
  		var data5 = $("#phoneNumber").val();
@@ -27,37 +27,42 @@
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override":"POST",
 			},
-			dataType:'JSON',
+			dataType: 'text',
 			data: JSON.stringify(
 				{id : data1, password : data2, name : data3, birth : data4, 
 					phoneNumber : data5, address : data6}		
 			),
 			success : function(result) {
+				if(result == "true") {
+					alert("회원가입이 완료되었습니다.");
+					location.replace("/info/1");
+				} else {
+					alert("회원가입 실패");
+				}
 			},
 			error : function(result){
+				alert("error");
 			}			
 		});
-		alert("회원가입이 완료되었습니다.");
-		document.location.href="/info";
  	}
   </script>
   <body>
   			<header>
-						<h1><a href="/info" style="text-decoration:none ">Seoul Life Information</a></h1>
+						<h1><a href="/info/1" style="text-decoration:none ">Seoul Life Information</a></h1>
 			</header>
 			<nav style="display: inline;">
-		   			<ul>지하철</ul>
-		   			<ul>버스</ul>
-		   			<ul>날씨</ul>
-		   			<ul>미세먼지</ul>
-		   			<ul>게시판</ul>
+		   			<ul><a href='/info/main/subway'>지하철</a></ul>
+				   <ul><a href='/info/main/bus'>버스</a></ul>
+				   <ul><a href='/info/main/weather'>날씨</a></ul>
+				   <ul><a href='/info/main/dust'>미세먼지</a></ul>
+				   <ul><a href="/info/main/board/1">게시판</a></ul>
 			</nav>
-  <p>ID: <input id='id' name='id' type='text' placeholder='ID'></p>
-  <p>password: <input id='password' name='password' type='text' placeholder='PASSWORD'></p>
+  <p>ID: <input id='ide' name='id' type='text' placeholder='ID'></p>
+  <p>password: <input id='pass' name='password' type='text' placeholder='PASSWORD'></p>
   <p>닉네임: <input id='name'  type='text' placeholder='name'></p>
   <p>생년월일: <input id='birth'  type='text' placeholder='birth'></p>
   <p>전화번호: <input id='phoneNumber' type='text' placeholder='phoneNumber'></p>
-  <p>집 주소: <input id='address' type='text' ></p>
+  <p>집 주소: <input id='address' type='text' placeholder='address'></p>
   <input type='button' value='done' onclick="join();">
   
   </body>

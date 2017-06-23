@@ -13,5 +13,5 @@ public interface LoginDao {
 	
 	public String getData() throws Exception;
 	
-	public String setJoin(LoginModel joinData) throws Exception;
+	public boolean setJoin(LoginModel joinData) throws Exception;
 }

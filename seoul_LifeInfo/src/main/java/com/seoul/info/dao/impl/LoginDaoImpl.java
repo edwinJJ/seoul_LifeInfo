@@ -33,9 +33,16 @@ public class LoginDaoImpl implements LoginDao{
 		return null;
 	}
 
-	public String setJoin(LoginModel joinData) throws Exception {
-		session.insert(namespace + ".usersInsert", joinData);
-		return null;
+	public boolean setJoin(LoginModel joinData) throws Exception {
+		boolean result = false;
+		try {
+			session.insert(namespace + ".usersInsert", joinData);
+			result = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	
@@ -47,14 +54,8 @@ public class LoginDaoImpl implements LoginDao{
 
 		if(Password.equals(Pass)){
 		    name = session.selectOne(namespace + ".usersName", id);
-			manager.getLog(name); 
-			
 		}else{
-			
-			manager.getLog(name);
 		}
-		
-		
-		return null;
+		return name;
 	}
 }

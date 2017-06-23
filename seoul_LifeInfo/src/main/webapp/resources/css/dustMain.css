@@ -5,7 +5,7 @@
 
 a:link { color: white; text-decoration: none;}
 a:visited { color: white; text-decoration: none;}
-a:hover { color: black; text-decoration: none;}
+a:hover { color: white; text-decoration: none;}
 
 #loginButton {
     background-color: white;
@@ -61,54 +61,6 @@ body {
 
 
 
-
-.mainBlock {
-	border: 3px solid white;
-	width: 350px;
-    height: 400px;
-	float: left;
-	margin-right: 70px;
-    margin-left: 70px;
-    margin-top: 50px;
-}
-
-
-
-#stationName {
-	   	  width: 200px;
-   		 height: 30px;
-       	 border: 3px black solid;
-       	 font-size: 20px;
-		float: left;	
-		 margin-left: 10px;
-}
-
-#stationSearchButton{
-    margin-left: 0px;
-    background-color: black;
-    border-top-width: 0px;
-    border-left-width: 0px;
-    border-bottom-width: 0px;
-    color: white;
-    font-size: 20px;
-    border-right-width: 0px;
-	float: left;
-	
-	    width: 42px;
-    height: 38px;
-    padding-left: 0px;
-}
-
-#subwayRealData {
-	    margin-left: 70px;
-    margin-right: 97px;
-    margin-top: 89px;
-}
-
-#realWeatherData {
-	        margin-left: 71px;
-}
-
 #dustDate {
 	    border: solid 2px black;
     width: 120px;
@@ -157,49 +109,3 @@ body {
     margin-left: 20px;
 }
 
-a#Lists.hoverIn {
-	color: black;
-	text-decoration: none;
-}
-
-#boardList{
-	list-style: none; 
-	font-size: 17px;
-	padding-left: 20px; 
-	color: white;
-}
-
-.listBlock{
-	float: left; 
-	border: 0px black solid;
-	padding-right: 30px;
-	padding-left: 30px;
-}
-
-#ListsNum{
-	margin-left: 259px;
-    margin-top: 20px;
-	margin-right: 518px; 
-	float: left;
-}
-
-#searchDiv {
-	    margin-left: 710px;
-	
-}
-
-#ListsNum ul{display:inline;}
-
-#boardBlock {
-	    height: 413px;
-    margin-bottom: 200px;
-    width: 1180px;
-    margin-left: 30px;
-    
-}
-
-
-.BlockTitle {
-	color: white;
-	font-family: fantasy;
-}

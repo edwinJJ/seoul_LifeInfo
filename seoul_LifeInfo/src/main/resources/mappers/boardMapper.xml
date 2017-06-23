@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.seoul.info.mappers.boardMapper">
+
+    <insert id="boardInsert" >
+      insert into board(number, author, created, title, description) 
+      values( default, #{author}, default, #{title}, #{description})
+   </insert>
+   
+   <select id="boardSelect" resultType="hashmap">
+    select number, title, author, to_char(created, 'YYYY.MM.DD') from board order by number offset ${offset} limit ${keyForLastPage};
+   </select>
+   
+   <select id="boardCheck" resultType="java.lang.Integer">
+      SELECT Count(number) FROM board;
+   </select>
+   
+   <select id="boardArticleSelect" resultType="hashmap">
+    select number, author, to_char(created, 'YYYY.MM.DD HH24:MI'), modified, title, description from board where number=#{number};
+   </select>
+   
+   <select id="boardArticleSelectForUpdate" resultType="hashmap">
+    select title, description from board where number=#{number};
+   </select>
+   
+    <select id="boardArticleLikesSelect" resultType="hashmap">
+    select likes[#{likesNumber}] from board where number=#{number};
+   </select>
+   
+   <select id="boardNumberOfLikesSelect" resultType="hashmap">
+    select array_upper(likes, 1) from board order by number offset ${offset} limit ${keyForLastPage};
+   </select>
+   
+   <select id="boardArticleNumberOfLikesSelect" resultType="hashmap">
+    select array_upper(likes, 1) from board where number= ${number};
+   </select>
+   
+    <update id="boardLikeUpdate" >
+    UPDATE board SET likes[#{like}]=#{name} WHERE number=#{number};
+    </update>
+    
+    <update id="boardFirstLikeUpdate" >
+    UPDATE board SET likes='{${name}}' WHERE number=${number};
+    </update>
+   
+  	<update id="boardLikeCancelUpdate" >
+    UPDATE board SET likes =array_remove(likes , '${name}') WHERE number=${number};
+    </update>
+    
+    <insert id="boardReplyInsert" >
+      insert into reply(number, name, description, location) 
+      values( default, #{name}, #{reply}, '{${number}}')
+   	</insert>
+   
+   
+   
+   
+   
+   
+   
+   
+   <select id="boardReplyNumberOfLocationSelect" resultType="hashmap">
+    select array_upper(location, 1) from reply where number=${replyNum};
+   </select>
+  
+   <select id="boardRightReplyNumberSelect" resultType="hashmap">
+    select number from reply where location[1]=${number};
+   </select>
+   
+   <select id="boardReplyRightLocationSelect" resultType="hashmap">
+    select location[${l}] from reply where number=${replyNum};
+   </select>
+   
+   <select id="boardReplySelect" resultType="hashmap">
+    select number, name, description from reply where number=${replyNum}
+   </select>
+   
+   
+   
+    <select id="superReplyLocationSelect" resultType="hashmap">
+    select location[${i}] from reply where number=${replyNum};
+   </select>
+   
+   
+
+   	
+ 
+
+	<insert id="boardReplyToReplyInsert">
+	
+	     insert into reply(number, name, description, location) 
+	      values( default, '${userName}', '${reply}', '${newLocation}') 
+	
+	</insert>
+
+
+    <delete id="boardArticleDelete" >
+    delete from board where number=#{number}
+    </delete>
+    
+    <delete id="boardArticleReplyDelete" >
+    delete from reply where location[1]=#{number}
+    </delete>
+   
+   <delete id="boardReplyDelete" >
+    delete from reply where number=#{number}
+    <!-- select * from reply where location[1:2] = '{6,3}' -->
+    </delete>
+    
+    <update id="boardArticleUpdate" >
+    UPDATE board SET title='${title}', description='${description}' WHERE number=${number};
+    </update>
+   
+    <select id="titleSearchedBoardSelect" resultType="hashmap">
+    select number, title, author, to_char(created, 'YYYY.MM.DD') from board where title similar to '%${search}%'
+   </select>
+   <select id="nameSearchedBoardSelect" resultType="hashmap">
+    select number, title, author, to_char(created, 'YYYY.MM.DD') from board where author similar to '%${search}%'
+   </select>
+   
+   <select id="titleSearchedBoardNumberOfLikesSelect" resultType="hashmap">
+    select array_upper(likes, 1) from board where title similar to '%${search}%' 
+   </select>
+   <select id="nameSearchedBoardNumberOfLikesSelect" resultType="hashmap">
+    select array_upper(likes, 1) from board where author similar to '%${search}%' 
+   </select>
+   
+    
+</mapper>

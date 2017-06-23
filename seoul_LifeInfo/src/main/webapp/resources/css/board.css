@@ -1,0 +1,107 @@
+@CHARSET "UTF-8";
+a {color:white; text-decoration: none;}
+a:hover { color: black; text-decoration: none;}
+
+
+nav ul{display:inline; color:white;}
+
+#ListsNum ul{display:inline;}
+
+
+.logButton {
+    background-color: white;
+    color: skyblue;
+    border-color: white;
+}
+
+#logInBlock{
+	float: right;
+	color: white;
+}
+
+body {
+	background-color: skyblue;
+}
+
+#header{
+	 color: white;
+	 font-family: fantasy;
+	 font-size: 50px; 	
+	 text-decoration:none;
+	 padding-left: 40px;
+	 padding-top:10px;
+}
+
+#boardList{
+	list-style: none; 
+	font-size: 20px;
+	padding-left: 20px; 
+	color: white;
+}
+
+.listBlock{
+	float: left; 
+	border: 0px black solid;
+	padding-right: 30px;
+	padding-left: 30px;
+}
+
+#ListsNum{
+	margin-left: 259px;
+    margin-top: 20px;
+	margin-right: 518px; 
+	float: left;
+}
+
+#searchDiv {
+	    margin-left: 710px;
+	
+}
+
+#id {
+	float: right;
+	height: 24px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+
+#password {
+	float: right;
+	height: 24px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+	
+.logButton {
+	 margin-top: 0px;
+    height: 53px;
+    margin-left: 5px;
+	float: right;
+	border-color: white;
+    border-radius: 3px;
+    background-color: white;
+    color: skyblue;
+    width: 80px;
+}
+
+
+a#Lists.hoverIn {
+	color: black;
+	text-decoration: none;
+}
+
+#logoutButton {
+	float: right;
+}
+#logoutButton:hover {
+	color: black;
+	cursor: pointer;
+}
+
+
+
+

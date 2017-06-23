@@ -20,10 +20,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.seoul.info.manager.impl.LoginManagerImpl;
 import com.seoul.info.model.LoginModel;
@@ -31,6 +33,8 @@ import com.seoul.info.model.LoginModel;
 /**
  * Handles requests for the application home page.
  */
+
+
 @Controller
 public class LoginController extends Applet {
 	
@@ -51,16 +55,28 @@ public class LoginController extends Applet {
 * 	MAIN PAGE
 * ------------------------------------------------------------------------------------------------------
 */		
-		@RequestMapping(value = "/", method = RequestMethod.GET)
-		public String home(Model model) {
-			return "main";
+		@RequestMapping(value = "/{number}", method = RequestMethod.GET)
+		public ModelAndView home(@PathVariable("number") int num) {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("main");
+			mav.addObject("ListPageNumber", num);
+			return mav;
 		}	
+		
+		@RequestMapping(value = "/main/{nav}", method = RequestMethod.GET)
+		public String navsView(@PathVariable("nav") String nav) {
+			
+			return nav;
+			
+		}	
+		
+		
 /*-------------------------------------------------------------------------------------------------------
  * 	JOIN PAGE
  * ------------------------------------------------------------------------------------------------------
  */
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String home() {
+	public String join() {
 		return "join";
 	}
 	
@@ -74,58 +90,47 @@ public class LoginController extends Applet {
     	loginModel.setPhoneNumber(joinData.get("phoneNumber"));
     	loginModel.setAddress(joinData.get("address"));
     	
-    	manager.setJoin(loginModel);
-    	
-    	return null;
+    	boolean result = manager.setJoin(loginModel);
+    	String bool;
+    	if(result){bool = "true";}
+    	else{bool = "false";}
+    	return bool;
     }
 /*-------------------------------------------------------------------------------------------------------
  * 	LOGIN PAGE
  * ------------------------------------------------------------------------------------------------------
  */
+	
+	
+	
+	
 	@RequestMapping(value = "/logIn", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody String logIn(@RequestBody Map<String, String> logData, HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	manager.setLog(logData);
-    	return null;
+    	String name = manager.setLog(logData); 
+    	return name;
     }
-    
-	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String logTest(HttpServletRequest request, HttpServletRequest response) {
-		
-		HttpSession session = request.getSession(false);
-		String nameInBrowser = (String) session.getAttribute("name");
-		String Name;
-		
-		if(nameInBrowser==null||nameInBrowser.equals("")){
-			session.setAttribute("name", controllerName);
-		     Name = (String) session.getAttribute("name");
-		    controllerName = "" ;
-		}else{
-			Name = nameInBrowser;
-		}
+	@RequestMapping(value = "/logError", method = RequestMethod.GET)
+	public String logError() {
+		return "logError";
+	}	
 	
-		if(Name==null||Name.equals("")){
-			session.removeAttribute("name");	
-			return "logError";
-		} else { 
-			return "main";
-		}
-
-	    
+	@RequestMapping(value = "/t", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+    public @ResponseBody String ttt(@RequestBody HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	String name = "byung jun jung";
+    	return name;
+    }
+	
+	@RequestMapping(value = "/test3", method = RequestMethod.GET)
+	public String test() {
+		return "test";
 	}	
 /*-------------------------------------------------------------------------------------------------------
  * 	FUNCTIONS
  * ------------------------------------------------------------------------------------------------------
 */	
- String controllerName = "";	
-	public String getLog(String name) throws Exception {
-		if(name != null){
-		   controllerName = name;
-			
-		}else{
-			System.out.println("failed at controller");
-		}
-		return null;
-	}
+ 
+	
+	
 	
 	
 	
