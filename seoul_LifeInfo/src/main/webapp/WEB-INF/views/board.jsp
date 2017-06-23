@@ -17,9 +17,10 @@
 </head>
 	<script>
 					var Name = "";
-					var logoutButton = "<p><input type='button' class='logButton' value='log out' onclick='logout();'></p>"
+					var logoutButton = "<p><a id='logoutButton' onclick='logout()'>log out</a></p>"
 					var ListsNum;
 					var Lists;
+					var searchedLists;
 					
 					if(sessionStorage.getItem('name')){
 						Name = sessionStorage.getItem('name');
@@ -47,7 +48,7 @@
 												location.replace("/info/logError"); 
 											}else{
 												sessionStorage.setItem('name', result);
-												$("#logIn").html("안녕하세요" + result + "님" + logoutButton);
+												$("#logInBlock").html("안녕하세요" + result + "님" + logoutButton);
 											}
 										},
 										error : function(result){
@@ -60,7 +61,7 @@
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info");
+										location.replace("/info/1");
 					}
 					
 					
@@ -123,28 +124,101 @@
 						});	
 					} getLists();
 					
+					function search() {
+						var data1 = $("#search").val();		
+						var classOfBody = $('#BODY').attr('class');
+				        
+						$.ajax({      
+									type: 'POST',
+									url: "/info/search",
+									headers:{
+										"Content-Type" : "application/json",
+										"X-HTTP-Method-Override":"POST",
+									},
+									dataType:'json',
+									data: JSON.stringify(
+											{searchData: data1, searchForWhat: classOfBody}		
+										),
+									success : function(result) {
+										searchedLists = result;
+										
+										var searchedNumbers = [];
+										for(var number in searchedLists) { searchedNumbers.push(number); }
+										searchedNumbers.reverse();
+										
+										var htmlLines = "<ul id='boardList'>";
+										 htmlLines += "<div class='listBlock'>";
+										 htmlLines += "<li style='color: black;'>Number<li>";
+										for(var number in searchedNumbers){
+											 htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["number"] + "</a></li>";
+										}
+										 htmlLines += "</div>";
+										
+										 htmlLines += "<div class='listBlock'>";
+										 htmlLines += "<li style='color: black;'>Author<li>";
+										for(var number in searchedNumbers){
+											 htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["author"] + "</a></li>";
+										}
+										 htmlLines += "</div>";
+										
+										 htmlLines += "<div class='listBlock'>";
+										 htmlLines += "<li style='color: black;'>Title<li>";
+										for(var number in searchedNumbers){
+											 htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["title"] + "</a></li>";
+										}
+										 htmlLines += "</div>";
+										
+										 htmlLines += "<div class='listBlock'>";
+										 htmlLines += "<li style='color: black;'>Created<li>";
+										for(var number in searchedNumbers){
+											 htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["to_char"] + "</a></li>";
+										}
+										 htmlLines += "</div>";
+										
+										 htmlLines += "<div class='listBlock'>";
+										 htmlLines += "<li style='color: black;'>Likes<li>";
+										for(var number in searchedNumbers){
+											 htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["likes"] + "</a></li>";
+										}
+										 htmlLines += "</div>";
+										 htmlLines += "</div>";
+										
+										
+										$("#divForSearch").html(htmlLines);
+										
+									
+									},
+									error : function(result){
+										console.log(result);
+										console.log("error!!!!");
+									},
+									async: false
+									
+						});	
+					} 
+					
 					
 					
 	</script>
-<body >
+<body class="title" id="BODY">
 	<header>
-			<a href="/info" id='header'>Seoul Life Information</a>
+			<a href="/info/1" id='header'>Seoul Life Information</a>
 	</header>
 	<nav>
-			   <ul>지하철</ul>
-			   <ul>버스</ul>
-			   <ul>날씨</ul>
-			   <ul>미세먼지</ul>
+			   <ul><a href='/info/main/subway'>지하철</a></ul>
+			   <ul><a href='/info/main/bus'>버스</a></ul>
+			   <ul><a href='/info/main/weather'>날씨</a></ul>
+			   <ul><a href='/info/main/dust'>미세먼지</a></ul>
 			   <ul><a href="/info/main/board/1">게시판</a></ul>
 	</nav>
 	<article>
 		<div id="logInBlock">			
 			<script>
 						if(Name == ""){  
-								var	lines = "<p><input id='id' type='text' placeholder='ID'></p>";
-									lines += "<p><input id='password' type='text' placeholder='PASSWORD'></p>";
-									lines += "<input class='logButton' type='button' value='log in' onclick='log();'>";
-									lines += "&nbsp; <a href='http://localhost:9999/info/join'>join us</a>";				
+								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
+									lines += "<input id='id' type='text' placeholder='ID'><br/>";
+									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
+									lines += "&nbsp; <a href='/info/join'>join us</a>";				
 						   		document.write(lines);
 				      	}
 				        else{
@@ -153,60 +227,80 @@
 			</script>	
 		</div>
 			
-		<h1 style="color: white;">자유게시판</h1>
+		<h1 style='font-family: fantasy;'>BOARD</h1>
 		
-		<ul id='boardList'>
-			
-			<script>
-			var Numbers = [];
-			for(var number in Lists) { Numbers.push(number); }
-			Numbers.reverse();
-			
-			document.write("<div class='listBlock'>");
-			document.write("<li style='color: black;'>Number<li>");
-			for(var number in Numbers){
-				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Numbers[number] + "</a></li>"); 
-			}
-			document.write("</div>");
-			document.write("<div class='listBlock'>");
-			document.write("<li style='color: black;'>Author<li>");
-			for(var number in Numbers){
-				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["author"] + "</a></li>"); 
-			}
-			document.write("</div>");
-			
-			document.write("<div class='listBlock'>");
-			document.write("<li style='color: black;'>Title<li>");
-			for(var number in Numbers){
-				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["title"] + "</a></li>"); 
-			}
-			document.write("</div>");
-			document.write("<div class='listBlock'>");
-			document.write("<li style='color: black;'>Created<li>");
-			for(var number in Numbers){
-				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["created"] + "</a></li>"); 
-			}
-			document.write("</div>");
-			
-			document.write("<div class='listBlock'>");
-			document.write("<li style='color: black;'>Likes<li>");
-			for(var number in Numbers){
-				document.write("<li><a id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["likes"] + "</a></li>"); 
-			}
-			document.write("</div>");
-			
-			
-			</script>
-		</ul>
 		
-		<div id="ListsNum">
-			<script>
-			ListsNum2 = ListsNum/5;
-			console.log(ListsNum2);
-			for(var i=1; i<=(ListsNum2+1); i++){document.write("<ul><a href='/info/main/board/"+i+"'>"+i+"</a></ul>");}
-			</script>
+		<div id='searchDiv'>
+			<input type='radio' name='chooseSearch' value="name" onClick ="document.body.className = 'author';"> author
+	 		<input type='radio' name='chooseSearch' value="title" checked onClick="document.body.className='title';"> title
+			<input type='text' id='search' placeholder='search'><input type='button' value='검색' onclick='search()'>
 		</div>
-		<a onclick="location.replace('/info/main/board/write')" style='float:left'>+ new</a>
+		<div id='divForSearch'>
+					<ul id='boardList'>
+						<script>
+						var Numbers = [];
+						for(var number in Lists) { Numbers.push(number); }
+						Numbers.reverse();
+						
+						
+						document.write("<div class='listBlock'>");
+						document.write("<li style='color: black;'>Number<li>");
+						
+						for(var number in Numbers){
+							document.write("<li><a name='"+Numbers[number]+"' id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Numbers[number] + "</a></li>"); 
+						}
+						document.write("</div>");
+						document.write("<div class='listBlock'>");
+						document.write("<li style='color: black;'>Author<li>");
+						for(var number in Numbers){
+							document.write("<li><a name='"+Numbers[number]+"' id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["author"] + "</a></li>"); 
+						}
+						document.write("</div>");
+						
+						document.write("<div class='listBlock'>");
+						document.write("<li style='color: black;'>Title<li>");
+						for(var number in Numbers){
+							document.write("<li><a name='"+Numbers[number]+"' id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["title"] + "</a></li>"); 
+						}
+						document.write("</div>");
+						document.write("<div class='listBlock'>");
+						document.write("<li style='color: black;'>Created<li>");
+						for(var number in Numbers){
+							document.write("<li><a name='"+Numbers[number]+"' id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["to_char"] + "</a></li>"); 
+						}
+						document.write("</div>");
+						
+						document.write("<div class='listBlock'>");
+						document.write("<li style='color: black;'>Likes<li>");
+						for(var number in Numbers){
+							if(Lists[Numbers[number]]["likes"]){
+								document.write("<li><a name='"+Numbers[number]+"' id='Lists' href='/info/main/board/article/" +Lists[Numbers[number]]["number"] + "'>" + Lists[Numbers[number]]["likes"] + "</a></li>"); 
+							}else{
+								document.write("<li>0</li>");
+							}						
+						}
+						document.write("</div>");
+						
+						/* -- 그 목록 전체가 검은색으로 되도록 하고싶음 
+						$("a[name="+Numbers[number]+"]").hover(
+								  function() {
+								    $("a[name="+Numbers[number]+"]").addClass( "hoverIn" );
+								  }, function() {
+								    $("a[name="+Numbers[number]+"]").removeClass( "hoverIn" );
+								  }
+						);
+						*/	
+						</script>
+					</ul>
+					
+					<div id="ListsNum">
+						<script>
+						ListsNum2 = ListsNum/10;
+						for(var i=1; i<(ListsNum2+1); i++){document.write("<ul><a href='/info/main/board/"+i+"' style='color: black;'>"+i+"</a></ul>");}
+						</script>
+					</div>
+					<a href='/info/logError' style='float:left; color:black;'>+ new</a>
+		</div>
 	</article>  
 </body>
 </html>
