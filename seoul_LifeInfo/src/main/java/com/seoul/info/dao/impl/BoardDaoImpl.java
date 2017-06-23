@@ -45,7 +45,7 @@ public class BoardDaoImpl implements BoardDao{
 		
 		int ListPageNum = boardData.get("ListPageNum");
 		int NumLists = boardData.get("NumLists");
-		int Num = NumLists-(ListPageNum)*5;
+		int Num = NumLists-(ListPageNum)*10;
 		ArrayList NumberOfLikes = new ArrayList();
 		ArrayList articleList = new ArrayList();
 		Map<String, Integer> mapp = new HashMap<String, Integer>();
@@ -55,7 +55,7 @@ public class BoardDaoImpl implements BoardDao{
 		if(Num<0){
 			
 			mapp.put("offset", 0);
-			mapp.put("keyForLastPage", 5 + Num);
+			mapp.put("keyForLastPage", 10 + Num);
 			articleList = (ArrayList)session.selectList(namespace + ".boardSelect", mapp);
 			NumberOfLikes = (ArrayList) session.selectList(namespace + ".boardNumberOfLikesSelect", mapp);
 			for(int i=0 ; i<articleList.size() ; i++){
@@ -69,7 +69,7 @@ public class BoardDaoImpl implements BoardDao{
 			
 			
 		}else{
-				mapp.put("keyForLastPage", 5 );
+				mapp.put("keyForLastPage", 10 );
 				articleList = (ArrayList)session.selectList(namespace + ".boardSelect", mapp);
 				NumberOfLikes = (ArrayList) session.selectList(namespace + ".boardNumberOfLikesSelect", mapp);
 				for(int i=0 ; i<articleList.size() ; i++){
@@ -406,4 +406,51 @@ public class BoardDaoImpl implements BoardDao{
 		
 		return result;
 	}
+	
+	
+public Map search(Map<String, String> searchData) throws Exception {
+		Map<String, String> mapp = new HashMap<String, String>();
+		Map<Integer, Object> map = new HashMap<Integer, Object>();
+		ArrayList articleList = new ArrayList();
+		ArrayList NumberOfLikes = new ArrayList();
+		
+		String searchForWhat = searchData.get("searchForWhat");
+		
+		String search = searchData.get("searchData");
+		mapp.put("search", search);
+		
+		System.out.println(searchForWhat instanceof String);
+		
+		if(searchForWhat.equals("title")){
+				
+				articleList = (ArrayList) session.selectList(namespace + ".titleSearchedBoardSelect", mapp);
+				NumberOfLikes = (ArrayList) session.selectList(namespace + ".titleSearchedBoardNumberOfLikesSelect", mapp);
+				for(int i=0 ; i<articleList.size() ; i++){
+					if((Map<String, Object>)NumberOfLikes.get(i) != null){
+					int NumOfLikes = (Integer) (((Map<String, Object>)NumberOfLikes.get(i)).get("array_upper"));
+						((Map<String,Object>) articleList.get(i)).put("likes", NumOfLikes);
+					}
+					map.put(i+1, (Map<String,Object>) articleList.get(i));
+				}
+		}else if(searchForWhat.equals("author")){
+					
+				articleList = (ArrayList) session.selectList(namespace + ".nameSearchedBoardSelect", mapp);
+				NumberOfLikes = (ArrayList) session.selectList(namespace + ".nameSearchedBoardNumberOfLikesSelect", mapp);
+				for(int i=0 ; i<articleList.size() ; i++){
+					if((Map<String, Object>)NumberOfLikes.get(i) != null){
+					int NumOfLikes = (Integer) (((Map<String, Object>)NumberOfLikes.get(i)).get("array_upper"));
+						((Map<String,Object>) articleList.get(i)).put("likes", NumOfLikes);
+					}
+					map.put(i+1, (Map<String,Object>) articleList.get(i));
+				}
+			
+		}
+		
+		return map;
+	}
+	
+	
+	
+	
+	
 }
