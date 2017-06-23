@@ -1,0 +1,111 @@
+@CHARSET "UTF-8";
+#welcome {
+	color: white;
+}
+
+a:link { color: white; text-decoration: none;}
+a:visited { color: white; text-decoration: none;}
+a:hover { color: white; text-decoration: none;}
+
+#loginButton {
+    background-color: white;
+    color: skyblue;
+    border-color: white;
+}
+
+nav ul{display:inline;}
+
+body {
+	background-color: skyblue;
+}
+
+#id {
+	float: right;
+	height: 24px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+
+#password {
+	float: right;
+	height: 24px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+	
+.logButton {
+	 margin-top: 0px;
+    height: 53px;
+    margin-left: 5px;
+	float: right;
+	border-color: white;
+    border-radius: 3px;
+    background-color: white;
+    color: skyblue;
+    width: 80px;
+}
+
+
+
+#logoutButton {
+	float: right;
+}
+#logoutButton:hover {
+	color: black;
+	cursor: pointer;
+}
+
+
+
+#dustDate {
+	    border: solid 2px black;
+    width: 120px;
+    height: 27px;
+    font-size: 20px;
+    float: left;
+    margin-right: 28px;
+    margin-top: 16px;    
+    margin-left: 19px;
+}
+#locationSelect {
+	float:left; 
+}
+
+
+
+
+.styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 150px;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+       width: 163px;
+}
+
+.rounded {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.black   { background-color: #000; }
+.black select   { color: #fff; }
+
+
+#realDustData {
+	margin-top: 20px;
+    margin-left: 20px;
+}
+
