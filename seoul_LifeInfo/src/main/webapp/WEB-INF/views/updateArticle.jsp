@@ -15,7 +15,7 @@
 </head>
 	<script>
 					var Name = "";
-					var logoutButton = "<p><input type='button' value='log out' onclick='logout();' style='background-color: white; color:skyblue;'></p>"
+					var logoutButton = "<p><a id='logoutButton' onclick='logout()'>log out</a></p>"
 					var Article;
 					
 					
@@ -60,7 +60,7 @@
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info");
+										location.replace("/info/1");
 					}
 					
 					
@@ -136,7 +136,7 @@
 	</script>
 <body style="background-color: skyblue;">
 	<header>
-			<a href="/info" style="color: white;
+			<a href="/info/1" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -144,10 +144,10 @@
 								   padding-top:10px;">Seoul Life Information</a>
 	</header>
 	<nav style="color:white;">
-			   <ul>지하철</ul>
-			   <ul>버스</ul>
-			   <ul>날씨</ul>
-			   <ul>미세먼지</ul>
+			   <ul><a href='/info/main/subway'>지하철</a></ul>
+			   <ul><a href='/info/main/bus'>버스</a></ul>
+			   <ul><a href='/info/main/weather'>날씨</a></ul>
+			   <ul><a href='/info/main/dust'>미세먼지</a></ul>
 			   <ul><a href="/info/main/board/1">게시판</a></ul>
 	</nav>
 	<article>
@@ -157,7 +157,7 @@
 								var	lines = "<p><input id='id' type='text' placeholder='ID'></p>";
 									lines += "<p><input id='password' type='text' placeholder='PASSWORD'></p>";
 									lines += "<input id='loginButton' type='button' value='log in' onclick='log();'>";
-									lines += "&nbsp; <a href='http://localhost:9999/info/join'>join us</a>";				
+									lines += "&nbsp; <a href='/info/join'>join us</a>";				
 						   		document.write(lines);
 				      	}
 				        else{
@@ -165,7 +165,7 @@
 				       	}    
 			</script>	
 		</div>
-		<h1 style="color: white;">자유게시판</h1>
+		<h1 style="font-family:fantasy">BOARD</h1>
 		<p>작성자:<script>document.write(Name);</script></p>
 		<p>TITLE <div class="editable" id='title' style="width: 1000px; height: 20px;border: 1px solid #ccc; padding: 5px; background-color: white;"></div></p>
 		<p>첨부파일 <input type='file' id='file'></p>
