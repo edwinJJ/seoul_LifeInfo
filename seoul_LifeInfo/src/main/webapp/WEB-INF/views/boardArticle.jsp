@@ -16,7 +16,7 @@
 </head>
 	<script>
 					var Name = "";
-					var logoutButton = "<p><input type='button' class='logButton' value='log out' onclick='logout();'></p>"
+					var logoutButton = "<p><a id='logoutButton' onclick='logout()'>log out</a></p>"
 					var Article;
 					var articleNum;
 					var Replies;
@@ -55,7 +55,7 @@
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info");
+										location.replace("/info/1");
 					}
 					
 					
@@ -232,9 +232,11 @@
 					$.each(Replies, function(i, v){
 						if ((parseInt(v.location[HowManyHaveSuper])==ReplyNumber) && (parseInt(v.location.length)==HowManyHaveSuper+1)){
 							var SendHowManyHaveSuper = HowManyHaveSuper+1;
-							replyLines += "<div style='margin-left: "+Margin+"px;border: 2px white solid;'><div style='color: white;'>" +v.name+ "</div>" + "&nbsp" + v.description  + "<br/>" + "<a style='float: right;' onclick='deleteReply()'>X</a><a id='replyToReply"+parseInt(v.number)+"' class='view' onclick='viewOrFoldReplyToReply("+parseInt(v.number)+", "+SendHowManyHaveSuper+")' style='font-size: 12px;'>대화 보기/접기</a>";
+							replyLines += "<div class='reply' style='margin-left: "+Margin+"px;'><div style='color: white;'>" +v.name+ "</div>" + "&nbsp" + v.description;
 							if(v.name == Name){
-							}	
+								replyLines += "<a class='deleteReply' onclick='deleteReply()'>X</a>";
+							}
+							replyLines += "<br/>" + "<a id='replyToReply"+parseInt(v.number)+"' class='view' onclick='viewOrFoldReplyToReply("+parseInt(v.number)+", "+SendHowManyHaveSuper+")'>대화 보기/접기</a>";
 							replyLines += "</div><div id='setReplyReply"+parseInt(v.number)+"'></div><div id='replyReplies"+parseInt(v.number)+"'></div>";
 						}
 					});
@@ -363,7 +365,7 @@
 	</script>
 <body style="background-color: skyblue;" class="white" id="BODY">
 	<header>
-			<a href="/info" style="color: white;
+			<a href="/info/1" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -371,20 +373,20 @@
 								   padding-top:10px;">Seoul Life Information</a>
 	</header>
 	<nav style="color:white;">
-			   <ul>지하철</ul>
-			   <ul>버스</ul>
-			   <ul>날씨</ul>
-			   <ul>미세먼지</ul>
+			   <ul><a href='/info/main/subway'>지하철</a></ul>
+			   <ul><a href='/info/main/bus'>버스</a></ul>
+			   <ul><a href='/info/main/weather'>날씨</a></ul>
+			   <ul><a href='/info/main/dust'>미세먼지</a></ul>
 			   <ul><a href="/info/main/board/1">게시판</a></ul>
 	</nav>
 	<article>
 		<div id="logIn">			
 			<script>
-						if(Name == ""){  
-								var	lines = "<p><input id='id' type='text' placeholder='ID'></p>";
-									lines += "<p><input id='password' type='text' placeholder='PASSWORD'></p>";
-									lines += "<input id='loginButton' type='button' value='log in' onclick='log();'>";
-									lines += "&nbsp; <a href='http://localhost:9999/info/join'>join us</a>";				
+							if(Name == ""){  
+								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
+									lines += "<input id='id' type='text' placeholder='ID'><br/>";
+									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
+									lines += "&nbsp; <a href='/info/join'>join us</a>";				
 						   		document.write(lines);
 				      	}
 				        else{
@@ -393,12 +395,12 @@
 			</script>	
 		</div>
 			
-		<h1 style="color: white;">자유게시판</h1>
+		<h1 style="font-family:fantasy">BOARD</h1>
 		<div id="boardArticleMain">
 			<div style="color: white;">
 				<p>ArticleNumber: <script>document.write(Article["number"])</script></p>
 				<p>Author: <script>document.write(Article["author"])</script></p>
-				<p>Created: <script>document.write(Article["created"])</script></p>
+				<p>Created: <script>document.write(Article["to_char"])</script></p>
 			</div>
 				<p style="font-size: 40px;"><script>document.write(Article["title"])</script></p>
 			<div id='articleDescription'>
@@ -409,13 +411,14 @@
 					<script>
 					
 						if(Article["author"] == Name){
-							document.write("<a onclick='deleteArticle()'>게시글 삭제</a>")
-							document.write("<br/><a href='/info/main/board/updateArticle/"+Article['number']+"'>게시글 수정</a>")
+							document.write("<a id='deleteArticle' onclick='deleteArticle()'>게시글 삭제</a>")
+							document.write("<br/><a id='updateArticle' href='/info/main/board/updateArticle/"+Article['number']+"'>게시글 수정</a>")
 						}
 					</script>
 				</div>
 			</p>
-			<p><div class="hearty" onclick="like()">
+			<p>
+				<div class="hearty" onclick="like()">
 					<script>
 						if(Article["likes"]){
 							var ArticleLikes = Article["likes"];
@@ -423,15 +426,20 @@
 							else{document.body.className = 'red'}
 							
 							document.write(Article["likes"].length + "&nbsp;"); 
-							for(var i=0; i<Article["likes"].length; i++){
-								document.write(Article["likes"][i]); 
-								if(i<Article["likes"].length-1){
-									document.write(",&nbsp;");
-								}
-							} 
+							
 						}
 					</script>
 				</div>
+					<script>
+						document.write("<div id='likeNames'>");
+						for(var i=0; i<Article["likes"].length; i++){
+							document.write(Article["likes"][i]); 
+							if(i<Article["likes"].length-1){
+								document.write(",&nbsp;");
+							}
+						}
+						document.write("</div>");
+					</script>
 			</p>
 			<script>
 				function like(){
@@ -452,10 +460,11 @@
 			 
 			$.each(Replies, function(i, v){
 				if (v.location[1]==null){
-					document.write("<div id='reply'>" + "<div style='color: white;'>" +v.name+ "</div>" + "&nbsp" + v.description  + "<br/>" + "<a id='replyToReply"+parseInt(v.number)+"' class='view' onclick='viewOrFoldReplyToReply("+parseInt(v.number)+", "+1+")' style='font-size: 12px;'>대화 보기/접기</a>");
+					document.write("<div class='reply'>" + "<div style='color: white;'>" +v.name+ "</div>" + "&nbsp" + v.description);
 					if(v.name == Name){
-						document.write("<a style='float: right;' onclick='deleteReply("+parseInt(v.number)+")'>X</a>");
+						document.write("<a class='deleteReply' onclick='deleteReply("+parseInt(v.number)+")'>X</a>");
 					}
+					 document.write("<br/>" + "<a id='replyToReply"+parseInt(v.number)+"' class='view' onclick='viewOrFoldReplyToReply("+parseInt(v.number)+", "+1+")'>대화 보기/접기</a>");
 					document.write("</div>" + "<div id='setReplyReply"+parseInt(v.number)+"'></div><div id='replyReplies"+parseInt(v.number)+"'></div>");
 				}
 			});
