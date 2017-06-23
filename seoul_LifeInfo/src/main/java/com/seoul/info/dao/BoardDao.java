@@ -21,4 +21,5 @@ public interface BoardDao {
 	public boolean deleteReply(Map<String, Object> replyNumber) throws Exception;
 	public Map getArticleForUpdate(Map<String, Integer> articleNumber) throws Exception;
 	public boolean updateArticle(Map<String, Object> updateData) throws Exception;
+	public Map search(Map<String, String> searchData) throws Exception;
 }
