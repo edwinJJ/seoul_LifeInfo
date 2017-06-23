@@ -121,4 +121,16 @@ public class BoardManagerImpl implements BoardManager{
 		boolean result = dao.updateArticle(updateData);
 		return result;
 	}
+	
+	
+	@Override
+	public Map search(Map<String, String> searchData) throws Exception {
+
+		Map Lists = dao.search(searchData);
+		return Lists;
+	}
+	
+	
+	
+	
 }
