@@ -106,7 +106,8 @@ body {
 }
 
 #realWeatherData {
-	        margin-left: 71px;
+	            margin-left: 43px;
+   				margin-top: 39px;
 }
 
 #dustDate {
@@ -202,4 +203,8 @@ a#Lists.hoverIn {
 .BlockTitle {
 	color: white;
 	font-family: fantasy;
+}
+
+.weatherImg {
+	width : 20px;
 }

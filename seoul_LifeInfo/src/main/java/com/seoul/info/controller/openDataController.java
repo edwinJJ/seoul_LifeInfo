@@ -209,5 +209,62 @@ public class openDataController extends Applet {
 	 
 	    }
 	
+	
+	@RequestMapping(value = "/main/bus", method = RequestMethod.GET)
+	public String busMain() {
+		return "busMain";
+	}	
+	
+	@RequestMapping(value = "/getBusData", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+    public @ResponseBody String getBusData(@RequestBody Map<String, String> reqData) throws UnsupportedEncodingException{
+			
+			String stationName = reqData.get("stationName");
+			stationName = URLEncoder.encode(stationName, "utf-8");
+			
+			String addr = "http://openapi.gbis.go.kr/ws/busarrivalservice?wsdl"+"?ServiceKey=";
+			String serviceKey = "t9HGmBLTVE2rpDHGGR%2F71x%2B%2FOsgyCqUIAMhrRFJIvnMvlzY2qy%2BDZzgVxnB2OZgsmUGycJl3AzRAEezcV%2FiVsA%3D%3D";
+			String parameter = "";
+			
+			serviceKey = URLEncoder.encode(serviceKey, "UTF-8");
+			
+			 parameter = parameter + "&" + "stationId=209900003";
+			 parameter = parameter + "&" + "routeId=100100282";
+		
+			addr = addr + serviceKey + parameter;
+	 
+	        String urlPath = addr;
+	        String pageContents = "";
+	        StringBuilder contents = new StringBuilder();
+	        try{
+	 
+	            URL url = new URL(urlPath);
+	            URLConnection con = (URLConnection)url.openConnection();
+	            InputStreamReader reader = new InputStreamReader (con.getInputStream(), "utf-8");
+	 
+	            BufferedReader buff = new BufferedReader(reader);
+	 
+	            while((pageContents = buff.readLine())!=null){
+	                System.out.println(pageContents);             
+	                contents.append(pageContents);
+	                contents.append("\r\n");
+	            }
+	 
+	            buff.close();
+	 
+	            System.out.println(contents.toString());
+	 
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }
+	        
+	        String str = contents.toString();
+	        
+	        
+	        System.out.println(str);
+	        
+	        return str;
+	 
+	    }
+	
     
 }

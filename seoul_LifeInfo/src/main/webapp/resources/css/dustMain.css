@@ -107,5 +107,18 @@ body {
 #realDustData {
 	margin-top: 20px;
     margin-left: 20px;
+        font-size: 25px;
 }
 
+#dustDescription {
+	    margin-top: 39px;
+   		 margin-left: 72px;
+}
+
+.dustDesc {
+	color: white;
+}
+
+.dustTitle {
+	color: white;
+}

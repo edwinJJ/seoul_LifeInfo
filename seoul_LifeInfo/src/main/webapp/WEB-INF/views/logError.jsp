@@ -18,7 +18,7 @@
 		 		
 				$.ajax({
 							type: 'POST',
-							url: "logIn",
+							url: "/info/logIn",
 							headers:{
 								"Content-Type" : "application/json",
 								"X-HTTP-Method-Override":"POST",

@@ -24,41 +24,10 @@
 						location.replace("/info/main/board/login");
 					}				
 					
-					function log() {
-					 		var data1 = $("#id").val();
-					 		var data2 = $("#password").val();
-					 		
-							$.ajax({
-										type: 'POST',
-										url: "/info/logIn",
-										headers:{
-											"Content-Type" : "application/json",
-											"X-HTTP-Method-Override":"POST",
-										},
-										dataType:'text',
-										data: JSON.stringify(
-											{id : data1, password : data2}		
-										),
-										success : function(result) {
-											
-											if(result==null || result==""){
-												location.replace("/info/logError"); 
-											}else{
-												sessionStorage.setItem('name', result);
-												$("#logIn").html("안녕하세요" + result + "님" + logoutButton);
-											}
-										},
-										error : function(result){
-											console.log(result);
-											console.log("error!!!!");
-										}
-							});	
-					}
-					
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info/1");
+										location.replace("/info/main/board/1");
 					}
 					
 					
@@ -138,20 +107,9 @@
 		<h1 style="font-family: fantasy">BOARD</h1>
 		<p>작성자:<script>document.write(Name);</script></p>
 		<p>제목: <input type='text' id='title' placeholder='title'></p>
-		<p>첨부파일 <input type='file' id='file'></p>
 		<p>본문</p> <textarea id='description' placeholder='description'></textarea>
 		<p><input type='button' value="작성" onclick='insert();'></p>
 		
-		 <form action="info/main/board/upload1" method="POST" enctype="multipart/form-data">
-		       	 학번 : <input type="text" name="hakbun" /><br />	
-		         파일 : <input type="file" name="report" /><br /> 
-		         <input type="submit" value="제출"><br />
-    	</form>
-    	
-    	<form name="uploadForm" method="post" action="/info/uploadFile.do" enctype="multipart/form-data">
-			    <input type="file" name="imgFile">
-			    <input type="submit" value="등록">
-		</form>
 	</article>  
 </body>
 </html>

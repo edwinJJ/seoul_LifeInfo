@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+@CHARSET "UTF-8";@CHARSET "UTF-8";
 #welcome {
 	color: white;
 }
@@ -59,42 +59,11 @@ body {
 	cursor: pointer;
 }
 
-#stationName {
-	   	 width: 441px;
-   		 height: 60px;
-       	 border: 3px black solid;
-       	 font-size: 30px;
-		float: left;	
+
+.weatherImg {
+	width: 50px;
 }
 
-#searchButton{
-    width: 80px;
-    margin-left: 0px;
-    background-color: black;
-    border-top-width: 0px;
-    border-left-width: 0px;
-    border-bottom-width: 0px;
-    color: white;
-    font-size: 20px;
-    border-right-width: 0px;
-    height: 68px;
-	float: left;
-}
-
-#realData {
-	margin-right: 374px;
-	    margin-top: 130px;
-}
-
-.trainLine {
-	font-size: 30px;
-	color: white;
-}
-
-.subwayDescription {
-	    font-size: 20px;
-}
-
-.openDoor {
-	
+.weatherDesc {
+	font-size : 30px;
 }

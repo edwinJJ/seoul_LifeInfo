@@ -42,7 +42,7 @@
 												location.replace("/info/logError"); 
 											}else{
 												sessionStorage.setItem('name', result);
-												$("#logIn").html("안녕하세요" + result + "님" + logoutButton);
+												location.replace("/info/main/board/article/${articleNumber}"); 
 											}
 										},
 										error : function(result){
@@ -55,7 +55,7 @@
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info/1");
+										location.replace("/info/main/board/article/${articleNumber}");
 					}
 					
 					

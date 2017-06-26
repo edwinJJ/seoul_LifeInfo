@@ -36,7 +36,7 @@
 					 		
 							$.ajax({
 										type: 'POST',
-										url: "logIn",
+										url: "/info/logIn",
 										headers:{
 											"Content-Type" : "application/json",
 											"X-HTTP-Method-Override":"POST",
@@ -114,9 +114,36 @@
 								
 								var weatherLines = "";
 								for(var i=0; i< 7 ; i++){
-									var DD = today.getDate();
-										DD = DD + parseInt($("data").eq(i).children("day").text());
-										weatherLines += "<div style='color: white;'>" +yyyy+"년 "+mm+"월 "+DD+"일 "+ $("data").eq(i).children("hour").text() +"시 "+ "</div>" + "&nbsp;" + $("data").eq(i).children("temp").text() + "℃" + "&nbsp;" + $("data").eq(i).children("wfKor").text()
+										var DD = today.getDate();
+											DD = DD + parseInt($("data").eq(i).children("day").text());
+											weatherLines += "<div>" 
+											weatherLines += "<span class='weatherDesc'>"
+											weatherLines += "<span style='color: white;'>" +yyyy+"년 "+mm+"월 "+DD+"일 "
+											weatherLines += $("data").eq(i).children("hour").text() +"시 "+ "</span>" + "&nbsp;" 
+											weatherLines += $("data").eq(i).children("temp").text() +"℃"+ "&nbsp;" 
+											weatherLines += $("data").eq(i).children("wfKor").text() 
+											weatherLines += "</span>"
+												weatherLines += "&nbsp;"	
+										
+											if($("data").eq(i).children("wfKor").text() == "구름 많음"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/구름 많음.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "흐림"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/흐림.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "비"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/비.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "맑음"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/맑음.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "구름 조금"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/구름 조금.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "눈"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/눈.jpg'>"
+											}
+											weatherLines += "</div>"
 										
 								}	
 									
@@ -159,7 +186,9 @@
 										else if((80 <= parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text())) && (parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text())< 150)){condition = '나쁨'; conditionColor='orange'}
 										else if(150 <= parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text())){condition = '매우나쁨'; conditionColor='red';}
 										
-										dustLines += "<div style='color: white;'>" + $("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("MSRSTE_NM").text() +"<div style='color: "+conditionColor+"'>("+condition+")</div>"+ "</div>" + "<p>미세먼지 : " +$("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text() + "</p>" + "<p>초미세먼지 : " + $("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM25").text() + "</p>"
+										dustLines += "<div style='color: white;'>" + $("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("MSRSTE_NM").text() +"<div style='color: "+conditionColor+"'>("+condition+")</div>"+ "</div>" 
+										dustLines += "<p>미세먼지 : " +$("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text() + "(㎍/㎥)" + "</p>" 
+										dustLines += "<p>초미세먼지 : " + $("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM25").text() + "(㎍/㎥)" + "</p>"
 										dustLines += "<br/>"
 									}	
 										

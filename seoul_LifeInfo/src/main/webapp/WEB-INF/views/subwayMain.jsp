@@ -27,7 +27,7 @@
 					 		
 							$.ajax({
 										type: 'POST',
-										url: "logIn",
+										url: "/info/logIn",
 										headers:{
 											"Content-Type" : "application/json",
 											"X-HTTP-Method-Override":"POST",
@@ -42,7 +42,7 @@
 												location.replace("/info/logError"); 
 											}else{
 												sessionStorage.setItem('name', result);
-												$("#logIn").html("안녕하세요" + result + "님" + logoutButton);
+												location.replace("/info/main/subway");
 											}
 										},
 										error : function(result){
@@ -55,7 +55,7 @@
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info/1");
+										location.replace("/info/main/subway");
 					}
 					
 					function getSubwayData() {
@@ -76,7 +76,7 @@
 								
 								var lines = "";
 								for(var i=0; i< $("row").length ; i++){
-									lines += "<div style='color: white;'>" + $("row").eq(i).children("trainLineNm").text() + "</div>" + "&nbsp;" + $("row").eq(i).children("arvlMsg2").text() + "&nbsp;" + $("row").eq(i).children("arvlMsg3").text()
+									lines += "<div	class='trainLine'>" + $("row").eq(i).children("trainLineNm").text() + "</div>" + "&nbsp;" + "<div class='subwayDescription'>" +$("row").eq(i).children("arvlMsg2").text() + "&nbsp;" + "</div>" +"<br/>"+ "<div class='openDoor'>"+ "내리실문-" + $("row").eq(i).children("subwayHeading").text() + "</div>"
 									lines += "<br/>"
 								}	
 									

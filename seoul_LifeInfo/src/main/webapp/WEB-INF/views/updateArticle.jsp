@@ -26,41 +26,9 @@
 						location.replace("/info/main/board/login");
 					}				
 					
-					function log() {
-					 		var data1 = $("#id").val();
-					 		var data2 = $("#password").val();
-					 		
-							$.ajax({
-										type: 'POST',
-										url: "/info/logIn",
-										headers:{
-											"Content-Type" : "application/json",
-											"X-HTTP-Method-Override":"POST",
-										},
-										dataType:'text',
-										data: JSON.stringify(
-											{id : data1, password : data2}		
-										),
-										success : function(result) {
-											
-											if(result==null || result==""){
-												location.replace("/info/logError"); 
-											}else{
-												sessionStorage.setItem('name', result);
-												$("#logIn").html("안녕하세요" + result + "님" + logoutButton);
-											}
-										},
-										error : function(result){
-											console.log(result);
-											console.log("error!!!!");
-										}
-							});	
-					}
-					
-					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info/1");
+										location.replace("/info/main/board/1");
 					}
 					
 					
@@ -168,7 +136,6 @@
 		<h1 style="font-family:fantasy">BOARD</h1>
 		<p>작성자:<script>document.write(Name);</script></p>
 		<p>TITLE <div class="editable" id='title' style="width: 1000px; height: 20px;border: 1px solid #ccc; padding: 5px; background-color: white;"></div></p>
-		<p>첨부파일 <input type='file' id='file'></p>
 		<p>DESCRIPTION <div class="editable" id='description' style="width: 1000px; height: 1000px;border: 1px solid #ccc; padding: 5px; background-color: white;"></div></p>
 		<p><input type='button' value="작성" onclick='update();'></p>
 		

@@ -6,8 +6,8 @@
 
 <html>
 <head>
-		<spring:url value="/resources/css/main.css" var="mainCSS" />
-		<link href="${mainCSS}" rel="stylesheet" />
+		<spring:url value="/resources/css/dustMain.css" var="dustMainCSS" />
+		<link href="${dustMainCSS}" rel="stylesheet" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<title>seoul life information</title>
@@ -35,7 +35,7 @@
 					 		
 							$.ajax({
 										type: 'POST',
-										url: "logIn",
+										url: "/info/logIn",
 										headers:{
 											"Content-Type" : "application/json",
 											"X-HTTP-Method-Override":"POST",
@@ -50,7 +50,7 @@
 												location.replace("/info/logError"); 
 											}else{
 												sessionStorage.setItem('name', result);
-												$("#logIn").html("안녕하세요" + result + "님" + logoutButton);
+												location.replace("/info/main/dust");
 											}
 										},
 										error : function(result){
@@ -63,7 +63,7 @@
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info/1");
+										location.replace("/info/main/dust");
 					}
 					
 					function getDustData() {
@@ -89,14 +89,27 @@
 										var condition;
 										var conditionColor;
 										
-										console.log(parseInt($("row").eq(i).children("PM10").text()) + 10 );
-										
 										if(parseInt($("row").eq(i).children("PM10").text()) < 30){condition='좋음'; conditionColor='blue';}
 										else if((30 <= parseInt($("row").eq(i).children("PM10").text())) && (parseInt($("row").eq(i).children("PM10").text())< 80)){condition = '보통'; conditionColor='green';}
 										else if((80 <= parseInt($("row").eq(i).children("PM10").text())) && (parseInt($("row").eq(i).children("PM10").text())< 150)){condition = '나쁨'; conditionColor='orange'}
 										else if(150 <= parseInt($("row").eq(i).children("PM10").text())){condition = '매우나쁨'; conditionColor='red';}
+
+										var superCondition;
+										var superConditionColor;
 										
-										lines += "<div style='color: white;'>" + $("row").eq(i).children("MSRSTE_NM").text() +"<div style='color: "+conditionColor+"'>("+condition+")</div>"+ "</div>" + "&nbsp;" + "<p>미세먼지 : " +$("row").eq(i).children("PM10").text() + "</p>" + "<p>초미세먼지 : " + $("row").eq(i).children("PM25").text() + "</p>"
+										if(parseInt($("row").eq(i).children("PM25").text()) < 15){superCondition='좋음'; superConditionColor='blue';}
+										else if((15 <= parseInt($("row").eq(i).children("PM25").text())) && (parseInt($("row").eq(i).children("PM25").text())< 50)){superCondition = '보통'; superConditionColor='green';}
+										else if((50 <= parseInt($("row").eq(i).children("PM25").text())) && (parseInt($("row").eq(i).children("PM25").text())< 100)){superCondition = '나쁨'; superConditionColor='orange'}
+										else if(100 <= parseInt($("row").eq(i).children("PM25").text())){superCondition = '매우나쁨'; superConditionColor='red';}
+										
+										
+										lines += "<div class='dustTitle'>" + $("row").eq(i).children("MSRSTE_NM").text() + "</div>" 
+										lines += "<p>미세먼지 : <span class='dustDesc'>" +$("row").eq(i).children("PM10").text() + "(㎍/㎥)" +"&nbsp;"+ "<span style='color: "+conditionColor+"'>("+condition+")</span>" + "</span></p>";
+										lines += "<p>초미세먼지 : <span class='dustDesc'>" + $("row").eq(i).children("PM25").text() + "(㎍/㎥)" +"&nbsp;"+ "<span style='color: "+superConditionColor+"'>("+superCondition+")</span>" + "</span></p>"; 
+										lines += "<p>이산화질소농도 : <span class='dustDesc'>" + $("row").eq(i).children("NO2").text() + "(ppm)"+ "</span></p>";
+										lines += "<p>오존농도 : <span class='dustDesc'>" + $("row").eq(i).children("O3").text() + "(ppm)"+ "</span></p>";
+										lines += "<p>일산화탄소농도 : <span class='dustDesc'>" + $("row").eq(i).children("CO").text() + "(ppm)"+ "</span></p>";
+										lines += "<p>아황산가스 : <span class='dustDesc'>" + $("row").eq(i).children("SO2").text() +"(ppm)"+ "</span></p>";
 										lines += "<br/>"
 									}	
 										
@@ -142,17 +155,19 @@
 			</script>	
 		</div>
 		<h1 style='font-family: fantasy;'>DUST INFORMATION</h1>
-		<input type='text' id='dustDate' placeholder='DATE'> &nbsp;
-					<div class='styled-select black rounded'>
+		<div id='dustDescription'>
+				<input type='text' id='dustDate' placeholder='DATE'> &nbsp;
+				<div class='styled-select black rounded'>
 						<select id='locationSelect' onChange="getDustData()">
 								<option>강남<option>강남대로<option>강동구<option>강변북로<option>강북구<option>강서구<option>공항대로<option>관악구
 								<option>광진구<option>구로구<option>금천구<option>노원구<option>도봉구<option>도산대로<option>동대문<option>동작구
 								<option>동작대로<option>마포구<option>서대문구<option>서초구<option>성동구<option>성북구
 						</select>
-					</div>
-					<div id='dustData' style='display: none;'></div>
-					<div id='realDustData'></div>
-					<script>function putDate(){$('#dustDate').val(yyyy.toString()+ mm.toString() +dd.toString())}putDate();</script>
+				</div>
+				<div id='dustData' style='display: none;'></div>
+				<div id='realDustData'></div>
+				<script>function putDate(){$('#dustDate').val(yyyy.toString()+ mm.toString() +dd.toString())}putDate();</script>
+		</div>
 	</article>  
 </body>
 </html>
