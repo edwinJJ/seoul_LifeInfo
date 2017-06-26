@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
+import java.util.zip.CheckedOutputStream;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.omg.CORBA.portable.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.seoul.info.manager.impl.LoginManagerImpl;
 import com.seoul.info.model.LoginModel;
@@ -214,6 +218,7 @@ public class openDataController extends Applet {
 	public String busMain() {
 		return "busMain";
 	}	
+	/*
 	
 	@RequestMapping(value = "/getBusData", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody String getBusData(@RequestBody Map<String, String> reqData) throws UnsupportedEncodingException{
@@ -232,39 +237,15 @@ public class openDataController extends Applet {
 		
 			addr = addr + serviceKey + parameter;
 	 
-	        String urlPath = addr;
-	        String pageContents = "";
-	        StringBuilder contents = new StringBuilder();
-	        try{
-	 
-	            URL url = new URL(urlPath);
-	            URLConnection con = (URLConnection)url.openConnection();
-	            InputStreamReader reader = new InputStreamReader (con.getInputStream(), "utf-8");
-	 
-	            BufferedReader buff = new BufferedReader(reader);
-	 
-	            while((pageContents = buff.readLine())!=null){
-	                System.out.println(pageContents);             
-	                contents.append(pageContents);
-	                contents.append("\r\n");
-	            }
-	 
-	            buff.close();
-	 
-	            System.out.println(contents.toString());
-	 
-	        }catch(Exception e){
-	            e.printStackTrace();
-	        }
-	        
-	        String str = contents.toString();
-	        
-	        
-	        System.out.println(str);
-	        
-	        return str;
+			URL url = new URL(addr);
+			InputStream in = (InputStream) url.openStream(); 
+			CheckedOutputStream bos = new CheckedOutputStream();
+			IOUtils.copy(in, bos);
+			in.close();
+			bos.close();
+			return ((Object) bos).getOut().toString();
 	 
 	    }
-	
+	*/
     
 }
