@@ -45,7 +45,6 @@
 											{id : data1, password : data2}		
 										),
 										success : function(result) {
-											console.log(result);
 											if(result==null || result==""){
 												location.replace("/info/logError"); 
 											}else{
@@ -121,11 +120,19 @@
 								}
 							});	
 					}
+					
+					function onKeyDownLog()
+					{
+					     if(event.keyCode == 13)
+					     {
+					          log();
+					     }
+					}
 													
 	</script>
 <body >
 	<header>
-			<a href="/info/1" style="color: white;
+			<a href="/info" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -144,10 +151,10 @@
 			<script>
 							if(Name == ""){  
 								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
-									lines += "<input id='id' type='text' placeholder='ID'><br/>";
-									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
-									lines += "&nbsp; <a href='/info/join'>join us</a>";				
-						   		document.write(lines);
+								lines += "<input id='id' type='text' placeholder='ID'><br/>";
+								lines += "<input id='password' type='password' placeholder='PASSWORD' onKeyDown='onKeyDownLog();'>";
+								lines += "&nbsp; <a href='/info/join'>join us</a>";				
+					   		document.write(lines);
 				      	}
 				        else{
 				        		document.write("안녕하세요 "+ Name + "님" + logoutButton);

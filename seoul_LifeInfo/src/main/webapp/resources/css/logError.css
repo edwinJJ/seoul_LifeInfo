@@ -2,8 +2,17 @@
 html {
 	margin-top: 200px;
 }
-body {
-	    margin-right: 476px;
+
+body { 
+	margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+	background-color: skyblue;
+}
+
+
+#logErrorDiv {
 	margin-left: 38%;
 	background-color: skyblue;
 }

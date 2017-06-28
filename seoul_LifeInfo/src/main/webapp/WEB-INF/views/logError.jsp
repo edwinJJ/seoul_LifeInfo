@@ -28,7 +28,6 @@
 								{id : data1, password : data2}		
 							),
 							success : function(result) {
-								console.log(result);
 								if(result==null || result==""){
 									location.replace("/info/logError"); 
 								}else{
@@ -42,16 +41,28 @@
 							}
 				});	
 		}
-</script>	
 		
-       <div id="header"><h1><a href="/info/1" style="text-decoration:none ">Seoul Life Information</a></h1></div>		
+		function onKeyDownLog()
+		{
+		     if(event.keyCode == 13)
+		     {
+		          log();
+		     }
+		}
+</script>	
+	<div id='logErrorDiv'>
+       <div id="header"><h1><a href="/info" style="text-decoration:none ">Seoul Life Information</a></h1></div>		
        		<div id='logInDiv'>		
 				<input class='logButton' type='button' value='log in' onclick='log();'>
 				<input id='id' type='text' placeholder='ID'><br/>
-				<input id='password' type='text' placeholder='PASSWORD'><br/>
+				<input id='password' type='password' placeholder='PASSWORD' onkeydown='onKeyDownLog();'><br/>
 				<a href='/info/join'>join us</a>
 			</div>
 			<h5>등록된 아이디가 없거나 비밀번호가 틀렸습니다.</h5>
-			
+	</div>
+<script>			
+var clientWidth = document.body.clientWidth;
+$("#logErrorDiv").css("margin-right", (clientWidth* 476 / 1280) + "px");	
+</script>
 </body>
 </html>

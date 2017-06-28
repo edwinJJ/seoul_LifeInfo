@@ -7,6 +7,9 @@ a:link { color: white; text-decoration: none;}
 a:visited { color: white; text-decoration: none;}
 a:hover { color: black; text-decoration: none;}
 
+#logIn {
+}
+
 #loginButton {
     background-color: white;
     color: skyblue;
@@ -64,23 +67,18 @@ body {
 
 .mainBlock {
 	border: 3px solid white;
-	width: 350px;
     height: 400px;
 	float: left;
-	margin-right: 70px;
-    margin-left: 70px;
     margin-top: 50px;
 }
 
 
 
 #stationName {
-	   	  width: 200px;
    		 height: 30px;
        	 border: 3px black solid;
        	 font-size: 20px;
 		float: left;	
-		 margin-left: 10px;
 }
 
 #stationSearchButton{
@@ -94,19 +92,18 @@ body {
     border-right-width: 0px;
 	float: left;
 	
-	    width: 42px;
     height: 38px;
     padding-left: 0px;
 }
 
 #subwayRealData {
-	    margin-left: 70px;
-    margin-right: 97px;
+	    margin-left: 20px;
     margin-top: 89px;
+    font-size: 20px;
 }
 
 #realWeatherData {
-	            margin-left: 43px;
+	                margin-left: 20px;
    				margin-top: 39px;
 }
 
@@ -165,7 +162,6 @@ a#Lists.hoverIn {
 
 #boardList{
 	list-style: none; 
-	font-size: 17px;
 	padding-left: 20px; 
 	color: white;
 }
@@ -194,8 +190,13 @@ a#Lists.hoverIn {
 #boardBlock {
 	    height: 413px;
     margin-bottom: 200px;
-    width: 1180px;
     margin-left: 30px;
+    
+    border: 3px solid white;
+	
+	float: left;
+	margin-right: 70px;
+    margin-top: 50px;
     
 }
 
@@ -208,3 +209,10 @@ a#Lists.hoverIn {
 .weatherImg {
 	width : 20px;
 }
+
+#realBusData {
+	font-size: 20px;
+	margin-left: 18px;
+}
+
+

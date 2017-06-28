@@ -55,8 +55,17 @@ public class LoginController extends Applet {
 * 	MAIN PAGE
 * ------------------------------------------------------------------------------------------------------
 */		
+		@RequestMapping(value = "/", method = RequestMethod.GET)
+		public ModelAndView home() {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("main");
+			mav.addObject("ListPageNumber", 1);
+			return mav;
+		}	
+	
+	
 		@RequestMapping(value = "/{number}", method = RequestMethod.GET)
-		public ModelAndView home(@PathVariable("number") int num) {
+		public ModelAndView homeNumber(@PathVariable("number") int num) {
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("main");
 			mav.addObject("ListPageNumber", num);

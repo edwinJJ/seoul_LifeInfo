@@ -46,7 +46,6 @@
 											{id : data1, password : data2}		
 										),
 										success : function(result) {
-											console.log(result);
 											if(result==null || result==""){
 												location.replace("/info/logError"); 
 											}else{
@@ -84,8 +83,8 @@
 								$("#subwayData").html(result);
 								var subwayLines = "";
 								for(var i=0; i< $("#subwayData").children("realtimeStationArrival").children("row").length ; i++){
-									subwayLines += "<div style='color: white;'>" + $("#subwayData").children("realtimeStationArrival").children("row").eq(i).children("trainLineNm").text() + "</div>" + "&nbsp;" + $("#subwayData").children("realtimeStationArrival").children("row").eq(i).children("arvlMsg2").text() + "&nbsp;" + $("#subwayData").children("realtimeStationArrival").children("row").eq(i).children("arvlMsg3").text()
-									subwayLines += "<br/>"
+									subwayLines += "<span style='color: white;'>" + $("#subwayData").children("realtimeStationArrival").children("row").eq(i).children("trainLineNm").text() + "</span>" + "&nbsp;" + $("#subwayData").children("realtimeStationArrival").children("row").eq(i).children("arvlMsg2").text() 
+									subwayLines += "</br>";
 								}	
 									
 								$("#subwayRealData").html(subwayLines);
@@ -126,22 +125,22 @@
 												weatherLines += "&nbsp;"	
 										
 											if($("data").eq(i).children("wfKor").text() == "구름 많음"){
-												weatherLines += "<img class='weatherImg' src='/info/resources/images/구름 많음.jpg'>"
+												weatherLines += "<img class='weatherImg' src='resources/images/구름 많음.jpg'>"
 											}
 											if($("data").eq(i).children("wfKor").text() == "흐림"){
-												weatherLines += "<img class='weatherImg' src='/info/resources/images/흐림.jpg'>"
+												weatherLines += "<img class='weatherImg' src='resources/images/흐림.jpg'>"
 											}
 											if($("data").eq(i).children("wfKor").text() == "비"){
-												weatherLines += "<img class='weatherImg' src='/info/resources/images/비.jpg'>"
+												weatherLines += "<img class='weatherImg' src='resources/images/비.jpg'>"
 											}
 											if($("data").eq(i).children("wfKor").text() == "맑음"){
-												weatherLines += "<img class='weatherImg' src='/info/resources/images/맑음.jpg'>"
+												weatherLines += "<img class='weatherImg' src='resources/images/맑음.jpg'>"
 											}
 											if($("data").eq(i).children("wfKor").text() == "구름 조금"){
-												weatherLines += "<img class='weatherImg' src='/info/resources/images/구름 조금.jpg'>"
+												weatherLines += "<img class='weatherImg' src='resources/images/구름 조금.jpg'>"
 											}
 											if($("data").eq(i).children("wfKor").text() == "눈"){
-												weatherLines += "<img class='weatherImg' src='/info/resources/images/눈.jpg'>"
+												weatherLines += "<img class='weatherImg' src='resources/images/눈.jpg'>"
 											}
 											weatherLines += "</div>"
 										
@@ -189,7 +188,7 @@
 										dustLines += "<div style='color: white;'>" + $("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("MSRSTE_NM").text() +"<div style='color: "+conditionColor+"'>("+condition+")</div>"+ "</div>" 
 										dustLines += "<p>미세먼지 : " +$("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text() + "(㎍/㎥)" + "</p>" 
 										dustLines += "<p>초미세먼지 : " + $("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM25").text() + "(㎍/㎥)" + "</p>"
-										dustLines += "<br/>"
+										dustLines += "</br>";
 									}	
 										
 									$("#realDustData").html(dustLines);
@@ -209,7 +208,7 @@
 					var data7 = "1";
 					var data8 = "2";
 			 		
-					$.ajax({      // 보내는 데이터가 꼭 있어야 함 
+					$.ajax({      
 								type: 'POST',
 								url: "/info/checkLists",
 								headers:{
@@ -239,7 +238,7 @@
 					ListPageNum = parseInt(ListPageNum);
 					var NumLists = ListsNum; 
 			        
-					$.ajax({      // 보내는 데이터가 꼭 있어야 함 
+					$.ajax({      
 								type: 'POST',
 								url: "/info/getLists",
 								headers:{
@@ -251,7 +250,6 @@
 										{ListPageNum : ListPageNum, NumLists : NumLists}		
 									),
 								success : function(result) {
-									console.log(result);
 									Lists = result;
 									
 								},
@@ -318,7 +316,12 @@
 									 htmlLines += "<div class='listBlock'>";
 									 htmlLines += "<li style='color: black;'>Likes<li>";
 									for(var number in searchedNumbers){
-										 htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["likes"] + "</a></li>";
+										
+										if(searchedLists[searchedNumbers[number]]["likes"]){
+											htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["likes"] + "</a></li>"; 
+										}else{
+											htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>0</a></li>";
+										}
 									}
 									 htmlLines += "</div>";
 									 htmlLines += "</div>";
@@ -337,11 +340,102 @@
 					});	
 				} 
 				
+				function onKeyDownLog()
+				{
+				     if(event.keyCode == 13)
+				     {
+				          log();
+				     }
+				}
+				
+				function onKeyDownStation()
+				{
+				     if(event.keyCode == 13)
+				     {
+				          getSubwayData();
+				     }
+				}
+				
+				function onKeyDownBoardSearch()
+				{
+				     if(event.keyCode == 13)
+				     {
+				          search();
+				     }
+				}
+				
+				
+				function getBusData() {
+					$.ajax({
+						type: 'POST',
+						url: "/info/getBusData",
+						headers:{
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override":"POST",
+						},
+						dataType:'text',
+						data: JSON.stringify(
+							{stationName : "stationName"}		
+						),
+						success : function(result) {
+							$("#busData").html(result);
+							var busLines = "";
+							busLines += "<h2>정류소 ID : "+$("msgBody").children("busArrivalList").eq(0).children("stationId").text()+"</h2>";   
+							for(var i=0; i< 1 ; i++){
+								busLines += "</br>"+"<div style='color: white'>버스 노선 ID : "+ $("msgBody").children("busArrivalList").eq(i).children("routeId").text()+"</div>" // 노선 id
+								
+								if(($("msgBody").children("busArrivalList").eq(i).children("locationNo1").text()) == 1){
+									busLines += "</br><span style='color: red'> 전 정류장</span>"
+								}else{
+									busLines += "</br><span style='color: red'>" + $("msgBody").children("busArrivalList").eq(i).children("locationNo1").text() + "정류장 전</span>"; 
+								}
+								busLines += "(" + $("msgBody").children("busArrivalList").eq(i).children("predictTime1").text() + "분 후 도착예정" + ")";  
+								if(parseInt($("msgBody").children("busArrivalList").eq(i).children("lowPlate1").text())==1){
+									busLines += "</br>" + "<span style='color: blue;'>저상버스</span>";
+								}
+								if(parseInt($("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt1" ).text())==-1){
+									busLines += "<br/> 빈자리 수 : 0"
+								}else{
+									busLines += "</br> 빈자리 수 : " + $("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt1" ).text();
+								}
+								if(($("msgBody").children("busArrivalList").eq(i).children("locationNo2").text()) == 1){
+									busLines += "</br><span style='color: red'> 전 정류장</span>"
+								}else{
+									busLines += "</br><span style='color: red'>" + $("msgBody").children("busArrivalList").eq(i).children("locationNo2").text() + "정류장 전</span>"; 
+								}
+								busLines += "(" + $("msgBody").children("busArrivalList").eq(i).children("predictTime2").text() + "분 후 도착예정" + ")"; 
+								if(parseInt($("msgBody").children("busArrivalList").eq(i).children("lowPlate2").text())==1){
+									busLines += "</br>" +"<span style='color: blue;'>저상버스</span>";
+								}
+								if(parseInt($("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt2" ).text())==-1){
+									busLines += "<br/> 빈자리 수 : 0"
+								}else{
+									busLines += "</br> 빈자리 수 : " + $("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt2" ).text();
+								}
+								if($("msgBody").children("busArrivalList").eq(i).children("flag").text() == "STOP"){
+									busLines += "<br/><span style='color: red'>운행종료</span>"
+								}else if($("msgBody").children("busArrivalList").eq(i).children("flag").text() == "WAIT"){
+									busLines += "<br/>회차지 대기"
+								}
+								busLines += "<br/>"
+							}	
+								
+							$("#realBusData").html(busLines);
+							
+						},
+						error : function(result){
+							console.log(result);
+							console.log("error!!!!");
+						}
+				});	
+			} getBusData();
+
+				
 													
 	</script>
 <body class="title" id="BODY">
 	<header>
-			<a href="/info/1" style="color: white;
+			<a href="/info" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -361,7 +455,7 @@
 							if(Name == ""){  
 								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
 									lines += "<input id='id' type='text' placeholder='ID'><br/>";
-									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
+									lines += "<input id='password' type='password' placeholder='PASSWORD' onKeyDown='onKeyDownLog();'>";
 									lines += "&nbsp; <a href='/info/join'>join us</a>";				
 						   		document.write(lines);
 					      	}
@@ -372,24 +466,26 @@
 		</div>
 		
 		<div class='mainBlock' id='subwayBlock'>
-			<h1 class='BlockTitle'>SUBWAY INFORMATION</h1>
+			<a href='/info/main/subway'><h1 class='BlockTitle'>SUBWAY INFORMATION</h1></a>
 			<h3 style='margin-left: 10px;'>역이름으로 검색</h3>
-				<input type='text' id='stationName' placeholder='STATION NAME'>
+				<input type='text' id='stationName' placeholder='STATION NAME' onKeyDown='onKeyDownStation();'>
 				<input id='stationSearchButton' type='button' value='검색' onclick='getSubwayData()'>
 				<div id='subwayData' style='display: none;'></div>
 				<div id='subwayRealData'></div>
 		</div>
 		<div class='mainBlock' id='busBlock'>
-			<h1 class='BlockTitle'>BUS INFORMATION</h1>
+			<a href='/info/main/bus'><h1 class='BlockTitle'>BUS INFORMATION</h1></a>
+			<div id='busData' style='display: none'></div>
+			<div id='realBusData'></div>
 		</div>
 		<div class='mainBlock' id='weatherBlock'>
-			<h1 class='BlockTitle'>WEATHER INFORMATION</h1>
+			<a href='/info/main/weather'><h1 class='BlockTitle'>WEATHER INFORMATION</h1></a>
 			<h3>경기도 성남시 분당구 정자2동</h3>
 			<div id='weatherData' style='display: none;'></div>
 			<div id='realWeatherData'></div>
 		</div>
 		<div class='mainBlock' id='dustBlock'>
-					<h1 class='BlockTitle'>DUST INFORMATION</h1>
+					<a href='/info/main/dust'><h1 class='BlockTitle'>DUST INFORMATION</h1></a>
 					<input type='text' id='dustDate' placeholder='DATE'> &nbsp;
 					<div class='styled-select black rounded'>
 						<select id='locationSelect' onChange="getDustData()">
@@ -402,12 +498,12 @@
 					<div id='realDustData'></div>
 					<script>function putDate(){$('#dustDate').val(yyyy.toString()+ mm.toString() +dd.toString())}putDate();</script>
 		</div>
-		<div class='mainBlock' id='boardBlock'>
-					<h1 class='BlockTitle'>BOARD</h1>
+		<div id='boardBlock'>
+					<a href='/info/main/board/1'><h1 class='BlockTitle'>BOARD</h1></a>
 					<div id='searchDiv'>
 						<input type='radio' name='chooseSearch' value="name" onClick ="document.body.className = 'author';"> author
 				 		<input type='radio' name='chooseSearch' value="title" checked onClick="document.body.className='title';"> title
-						<input type='text' id='search' placeholder='search'><input type='button' value='검색' onclick='search()'>
+						<input type='text' id='search' placeholder='search' onkeydown='onKeyDownBoardSearch();'><input type='button' value='검색' onclick='search()'>
 					</div>
 					<div id='divForSearch'>
 								<ul id='boardList'>
@@ -454,16 +550,6 @@
 										}						
 									}
 									document.write("</div>");
-									
-									/* -- 그 목록 전체가 검은색으로 되도록 하고싶음 
-									$("a[name="+Numbers[number]+"]").hover(
-											  function() {
-											    $("a[name="+Numbers[number]+"]").addClass( "hoverIn" );
-											  }, function() {
-											    $("a[name="+Numbers[number]+"]").removeClass( "hoverIn" );
-											  }
-									);
-									*/	
 									</script>
 								</ul>
 								
@@ -473,9 +559,23 @@
 									for(var i=1; i<(ListsNum2+1); i++){document.write("<ul><a href='/info/"+i+"' style='color: black;'>"+i+"</a></ul>");}
 									</script>
 								</div>
-								<a href='/info/logError' style='float:left; color:black;'>+ new</a>
+								<a href='/info/main/board/write' style='float:left; color:black;'>+ new</a>
 					</div>
 		</div>
+		<script>
+	//반응형 웹 
+		var clientWidth = document.body.clientWidth;
+		$(".mainBlock").css("width", (clientWidth * 350 / 1249) + "px");
+		$(".mainBlock").css("margin-right", (clientWidth * 70 / 1249)+"px");
+		$(".mainBlock").css("margin-left", (clientWidth * 70 / 1249)+"px");
+		$("#boardList").css("font-size", (clientWidth * 17 / 1249)+"px");
+		$("#boardBlock").css("width", (clientWidth * 1180 / 1249)+"px");
+		$("#logIn").css("margin-left", (clientWidth * 700 / 1249)+"px");
+		$("#stationName").css({"margin-left": (clientWidth * 10 / 1249)+"px", "width": (clientWidth * 200 / 1249)+"px"});
+		$("#stationSearchButton").css({"width": (clientWidth * 42 / 1249)+"px", "font-size": (clientWidth * 20 / 1249)+"px"});
+		
+		$("#realWeatherData").css("font-size", (clientWidth * 16 / 1249)+"px");
+		</script>
 	</article>  
 </body>
 </html>

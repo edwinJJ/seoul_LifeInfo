@@ -37,7 +37,6 @@
 											{id : data1, password : data2}		
 										),
 										success : function(result) {
-											console.log(result);
 											if(result==null || result==""){
 												location.replace("/info/logError"); 
 											}else{
@@ -71,7 +70,49 @@
 								{stationName : "stationName"}		
 							),
 							success : function(result) {
-								
+								$("#busData").html(result);
+								var busLines = "";
+								busLines += "<h2>정류소 ID : "+$("msgBody").children("busArrivalList").eq(0).children("stationId").text()+"</h2>";   
+								for(var i=0; i< $("busArrivalList").length ; i++){
+									busLines += "</br>"+"<div style='color: white'>버스 노선 ID : "+ $("msgBody").children("busArrivalList").eq(i).children("routeId").text()+"</div>" // 노선 id
+									
+									if(($("msgBody").children("busArrivalList").eq(i).children("locationNo1").text()) == 1){
+										busLines += "</br><span style='color: red'> 전 정류장</span>"
+									}else{
+										busLines += "</br><span style='color: red'>" + $("msgBody").children("busArrivalList").eq(i).children("locationNo1").text() + "정류장 전</span>"; 
+									}
+									busLines += "(" + $("msgBody").children("busArrivalList").eq(i).children("predictTime1").text() + "분 후 도착예정" + ")";  
+									if(parseInt($("msgBody").children("busArrivalList").eq(i).children("lowPlate1").text())==1){
+										busLines += "</br>" + "<span style='color: blue;'>저상버스</span>";
+									}
+									if(parseInt($("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt1" ).text())==-1){
+										busLines += "<br/> 빈자리 수 : 0"
+									}else{
+										busLines += "</br> 빈자리 수 : " + $("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt1" ).text();
+									}
+									if(($("msgBody").children("busArrivalList").eq(i).children("locationNo2").text()) == 1){
+										busLines += "</br><span style='color: red'> 전 정류장</span>"
+									}else{
+										busLines += "</br><span style='color: red'>" + $("msgBody").children("busArrivalList").eq(i).children("locationNo2").text() + "정류장 전</span>"; 
+									}
+									busLines += "(" + $("msgBody").children("busArrivalList").eq(i).children("predictTime2").text() + "분 후 도착예정" + ")"; 
+									if(parseInt($("msgBody").children("busArrivalList").eq(i).children("lowPlate2").text())==1){
+										busLines += "</br>" +"<span style='color: blue;'>저상버스</span>";
+									}
+									if(parseInt($("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt2" ).text())==-1){
+										busLines += "<br/> 빈자리 수 : 0"
+									}else{
+										busLines += "</br> 빈자리 수 : " + $("msgBody").children("busArrivalList").eq(i).children("remainSeatCnt2" ).text();
+									}
+									if($("msgBody").children("busArrivalList").eq(i).children("flag").text() == "STOP"){
+										busLines += "<br/><span style='color: red'>운행종료</span>"
+									}else if($("msgBody").children("busArrivalList").eq(i).children("flag").text() == "WAIT"){
+										busLines += "<br/>회차지 대기"
+									}
+									busLines += "<br/>"
+								}	
+									
+								$("#realBusData").html(busLines);
 								
 							},
 							error : function(result){
@@ -80,11 +121,40 @@
 							}
 					});	
 				} getBusData();
+				
+				function onKeyDownLog()
+				{
+				     if(event.keyCode == 13)
+				     {
+				          log();
+				     }
+				}
+				
+				function getBusStationData() {
+			 		
+					$.ajax({
+								type: 'POST',
+								url: "/info/getBusStationData",
+								headers:{
+									"Content-Type" : "application/json",
+									"X-HTTP-Method-Override":"POST",
+								},
+								dataType:'text',
+								data: JSON.stringify(
+									{id : "haha"}		
+								),
+								success : function(result) {
+								},
+								error : function(result){
+								}
+					});	
+			} getBusStationData();
+			
 													
 	</script>
 <body >
 	<header>
-			<a href="/info/1" style="color: white;
+			<a href="/info" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -103,10 +173,10 @@
 			<script>
 							if(Name == ""){  
 								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
-									lines += "<input id='id' type='text' placeholder='ID'><br/>";
-									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
-									lines += "&nbsp; <a href='/info/join'>join us</a>";				
-						   		document.write(lines);
+								lines += "<input id='id' type='text' placeholder='ID'><br/>";
+								lines += "<input id='password' type='password' placeholder='PASSWORD' onKeyDown='onKeyDownLog();'>";
+								lines += "&nbsp; <a href='/info/join'>join us</a>";				
+					   		document.write(lines);
 				      	}
 				        else{
 				        		document.write("안녕하세요 "+ Name + "님" + logoutButton);
@@ -114,6 +184,8 @@
 			</script>	
 		</div>
 		<h1 style='font-family: fantasy;'>BUS INFORMATION</h1>
+		<div id='busData' style='display: none;'></div>
+		<div id='realBusData'></div>
 		
 	</article>  
 </body>

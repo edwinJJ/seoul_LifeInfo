@@ -88,9 +88,7 @@
 												{articleNumber : articleNumber}		
 											),
 										success : function(result) {
-											console.log(result);
 											Article = result;
-											console.log(Article);
 										},
 										error : function(result){
 											console.log(result);

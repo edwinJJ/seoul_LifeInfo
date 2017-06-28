@@ -21,10 +21,10 @@
 						Name = sessionStorage.getItem('name');
 					}else{
 						alert('로그인을 해야합니다.');
-						location.replace("/info/main/board/login");
+						location.replace("/info/main/logError");
 					}				
 					
-					
+				
 					function logout() {
 										sessionStorage.clear();
 										location.replace("/info/main/board/1");
@@ -32,8 +32,6 @@
 					
 					
 					function insert() {
-						console.log("write()실행");
-						
 				 		var data1 = $("#title").val();
 				 		var data2 = $("#description").val();
 				 		var data3 = Name;
@@ -64,18 +62,11 @@
 						});
 				 	}
 					
-					
-					function test() {
-						 	$('#ajaxform').ajaxForm({  beforeSubmit: function (data, frm, opt) { alert("전송전!!"); return true; },  
-							 							success: function(responseText, statusText){ alert("전송성공!!"); },  
-							 							error: function(){ alert("에러발생!!"); } 
-							 });
-					}
 													
 	</script>
 <body style="background-color: skyblue;">
 	<header>
-			<a href="/info/1" style="color: white;
+			<a href="/info" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;

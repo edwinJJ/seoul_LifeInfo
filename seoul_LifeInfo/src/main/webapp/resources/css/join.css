@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+body {
+	background-color : skyblue;
+}
+
+#joinDiv {
+	text-align: center;
+    margin-top: 150px;
+    background-color: white;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    margin-left: 400px;
+    margin-right: 400px;
+    border: solid 3px black;
+}
+
+a:link {    
+	text-shadow: 0 0 8px skyblue;
+    color: white; 
+    text-decoration: none;
+}
+a:visited {    
+	text-shadow: 0 0 8px skyblue;
+    color: white; 
+    text-decoration: none;
+}
+a:hover {    
+	text-shadow: 0 0 8px skyblue;
+    color: skyblue; 
+    text-decoration: none;
+}
+
+.INPUT {
+	width: 200px;
+    height: 20px;
+}

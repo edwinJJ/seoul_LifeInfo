@@ -48,7 +48,7 @@
 												location.replace("/info/logError"); 
 											}else{
 												sessionStorage.setItem('name', result);
-												location.replace("/info/main/board");
+												location.replace("/info/main/board/1");
 											}
 										},
 										error : function(result){
@@ -61,7 +61,7 @@
 					
 					function logout() {
 										sessionStorage.clear();
-										location.replace("/info/main/board");
+										location.replace("/info/main/board/1");
 					}
 					
 					
@@ -69,7 +69,7 @@
 						var data7 = "1";
 						var data8 = "2";
 				 		
-						$.ajax({      // 보내는 데이터가 꼭 있어야 함 
+						$.ajax({      
 									type: 'POST',
 									url: "/info/checkLists",
 									headers:{
@@ -99,7 +99,7 @@
 						ListPageNum = parseInt(ListPageNum);
 						var NumLists = ListsNum; 
 				        
-						$.ajax({      // 보내는 데이터가 꼭 있어야 함 
+						$.ajax({     
 									type: 'POST',
 									url: "/info/getLists",
 									headers:{
@@ -111,7 +111,6 @@
 											{ListPageNum : ListPageNum, NumLists : NumLists}		
 										),
 									success : function(result) {
-										console.log(result);
 										Lists = result;
 										
 									},
@@ -178,7 +177,12 @@
 										 htmlLines += "<div class='listBlock'>";
 										 htmlLines += "<li style='color: black;'>Likes<li>";
 										for(var number in searchedNumbers){
-											 htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["likes"] + "</a></li>";
+											if(searchedLists[searchedNumbers[number]]["likes"]){
+												htmlLines += "<li><a id='Lists' href='/info/main/board/article/" +searchedLists[searchedNumbers[number]]["number"] + "'>" + searchedLists[searchedNumbers[number]]["likes"] + "</a></li>"; 
+											}else{
+												htmlLines += "<li>0</li>";
+											}		
+											 
 										}
 										 htmlLines += "</div>";
 										 htmlLines += "</div>";
@@ -197,12 +201,28 @@
 						});	
 					} 
 					
+					function onKeyDownBoardSearch()
+					{
+					     if(event.keyCode == 13)
+					     {
+					          search();
+					     }
+					}
+					
+					function onKeyDownLog()
+					{
+					     if(event.keyCode == 13)
+					     {
+					          log();
+					     }
+					}
+					
 					
 					
 	</script>
 <body class="title" id="BODY">
 	<header>
-			<a href="/info/1" id='header'>Seoul Life Information</a>
+			<a href="/info" id='header'>Seoul Life Information</a>
 	</header>
 	<nav>
 			   <ul><a href='/info/main/subway'>지하철</a></ul>
@@ -216,10 +236,10 @@
 			<script>
 						if(Name == ""){  
 								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
-									lines += "<input id='id' type='text' placeholder='ID'><br/>";
-									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
-									lines += "&nbsp; <a href='/info/join'>join us</a>";				
-						   		document.write(lines);
+								lines += "<input id='id' type='text' placeholder='ID'><br/>";
+								lines += "<input id='password' type='password' placeholder='PASSWORD' onKeyDown='onKeyDownLog();'>";
+								lines += "&nbsp; <a href='/info/join'>join us</a>";				
+					   			document.write(lines);
 				      	}
 				        else{
 				        		document.write("안녕하세요 "+ Name + "님" + logoutButton);
@@ -233,7 +253,7 @@
 		<div id='searchDiv'>
 			<input type='radio' name='chooseSearch' value="name" onClick ="document.body.className = 'author';"> author
 	 		<input type='radio' name='chooseSearch' value="title" checked onClick="document.body.className='title';"> title
-			<input type='text' id='search' placeholder='search'><input type='button' value='검색' onclick='search()'>
+			<input type='text' id='search' placeholder='search' onkeydown='onKeyDownBoardSearch();'><input type='button' value='검색' onclick='search()'>
 		</div>
 		<div id='divForSearch'>
 					<ul id='boardList'>
@@ -281,15 +301,6 @@
 						}
 						document.write("</div>");
 						
-						/* -- 그 목록 전체가 검은색으로 되도록 하고싶음 
-						$("a[name="+Numbers[number]+"]").hover(
-								  function() {
-								    $("a[name="+Numbers[number]+"]").addClass( "hoverIn" );
-								  }, function() {
-								    $("a[name="+Numbers[number]+"]").removeClass( "hoverIn" );
-								  }
-						);
-						*/	
 						</script>
 					</ul>
 					
@@ -299,8 +310,13 @@
 						for(var i=1; i<(ListsNum2+1); i++){document.write("<ul><a href='/info/main/board/"+i+"' style='color: black;'>"+i+"</a></ul>");}
 						</script>
 					</div>
-					<a href='/info/logError' style='float:left; color:black;'>+ new</a>
+					<a href='/info/main/board/write' style='float:left; color:black;'>+ new</a>
 		</div>
+		<script>
+		var clientWidth = document.body.clientWidth;
+		$("#boardList").css("font-size", (clientWidth * 20 / 1249)+"px");
+		$("#searchDiv").css("margin-left", (clientWidth * 710 / 1249)+"px");
+		</script>
 	</article>  
 </body>
 </html>

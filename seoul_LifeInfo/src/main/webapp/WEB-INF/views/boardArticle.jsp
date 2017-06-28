@@ -37,7 +37,6 @@
 											{id : data1, password : data2}		
 										),
 										success : function(result) {
-											console.log(result);
 											if(result==null || result==""){
 												location.replace("/info/logError"); 
 											}else{
@@ -75,9 +74,7 @@
 											{articleNumber : articleNumber}		
 										),
 									success : function(result) {
-										console.log(result);
 										Article = result;
-										console.log(Article);
 									},
 									error : function(result){
 										console.log(result);
@@ -112,10 +109,19 @@
 												{name: Name, articleNum : articleNum}		
 											),
 										success : function(result) {
-											console.log(result);
 											if(result == "true") {
 												document.body.className = 'red';
-												location.replace("/info/main/board/article/"+articleNum);
+												
+												if(Article["likes"] == null){
+													$("#likesNum").html(1);
+													$("#likeNames").html(Name);
+												}else{
+													var likesNumBefore = parseInt($("#likesNum").text());
+													$("#likesNum").html(likesNumBefore+1);
+													var likePeople = $("#likeNames").text();
+													likePeople = likePeople + ", " + Name;
+													$("#likeNames").html(likePeople);
+												}
 											} else {
 												alert("좋아요 실패");
 											}
@@ -147,10 +153,25 @@
 											{name: Name, articleNum : articleNum}		
 										),
 									success : function(result) {
-										console.log(result);
 										if(result == "true") {
 											document.body.className = 'white';
-											location.replace("/info/main/board/article/"+articleNum);
+											
+											var likesNumBefore = parseInt($("#likesNum").text());
+											$("#likesNum").html(likesNumBefore-1);
+											
+											var likesLines =" ";
+											if(Article["likes"] == null){}
+											else{
+												for(var i=0; i<Article["likes"].length; i++){
+													if(Article["likes"][i] != Name){
+														if(i != 0){likesLines += ",&nbsp;";}
+														likesLines += Article["likes"][i]; 
+													}
+												}
+											}	
+											likesLines += "</div>";
+											
+											$("#likeNames").html(likesLines);
 										} else {
 											alert("좋아요 취소 실패");
 										}
@@ -178,9 +199,9 @@
 															{name : Name , articleNum : articleNum, replyDesc: replyDesc} 
 															), 
 													success : function(result) { 
-																	console.log(result); 
 																	if(result == "true") { 
 																		location.replace("/info/main/board/article/"+articleNum);
+																		
 																	} else { 
 																		alert("댓글 등록 실패"); 
 																	} 
@@ -210,8 +231,6 @@
 										),
 									success : function(result) {
 										Replies = result;
-										console.log(Replies);
-										console.log("성공");
 									},
 									error : function(result){
 										console.log(result);
@@ -227,14 +246,12 @@
 					var Margin = HowManyHaveSuper*40;
 					$("#setReplyReply" + ReplyNumber).html("<div style='margin-left: "+Margin+"px;'><textarea class='replyToReplyDesc' id='replyInReplyDesc"+ReplyNumber+"' placeholder='Comment..'></textarea><input class='replyButton' type='button' value='작성' onclick='setReplyToReply("+ReplyNumber+")'></div>");
 					var replyLines = "";
-					console.log(ReplyNumber);
-					console.log(HowManyHaveSuper);
 					$.each(Replies, function(i, v){
 						if ((parseInt(v.location[HowManyHaveSuper])==ReplyNumber) && (parseInt(v.location.length)==HowManyHaveSuper+1)){
 							var SendHowManyHaveSuper = HowManyHaveSuper+1;
 							replyLines += "<div class='reply' style='margin-left: "+Margin+"px;'><div style='color: white;'>" +v.name+ "</div>" + "&nbsp" + v.description;
 							if(v.name == Name){
-								replyLines += "<a class='deleteReply' onclick='deleteReply()'>X</a>";
+								replyLines += "<a class='deleteReply' onclick='deleteReply("+parseInt(v.number)+")'>X</a>";
 							}
 							replyLines += "<br/>" + "<a id='replyToReply"+parseInt(v.number)+"' class='view' onclick='viewOrFoldReplyToReply("+parseInt(v.number)+", "+SendHowManyHaveSuper+")'>대화 보기/접기</a>";
 							replyLines += "</div><div id='setReplyReply"+parseInt(v.number)+"'></div><div id='replyReplies"+parseInt(v.number)+"'></div>";
@@ -245,7 +262,6 @@
 				}	
 				
 				function foldReplyToReply(ReplyNumber){
-					console.log("haha");
 					$("#setReplyReply" + ReplyNumber).html("<div></div>");
 					$("#replyReplies" + ReplyNumber).html("<div></div>");	
 				}
@@ -267,7 +283,6 @@
 											{name : Name , replyInReplyDesc: replyInReplyDesc, replyNum: replyNum} 
 											), 
 									success : function(result) { 
-													console.log(result); 
 													if(result == "true") { 
 														location.replace("/info/main/board/article/"+articleNum);
 													} else { 
@@ -288,7 +303,6 @@
 				
 				function viewOrFoldReplyToReply(ReplyNumber, HowManyHaveSuper){
 					var classOfReplyToReply = $('#replyToReply'+ReplyNumber).attr('class');
-					console.log(classOfReplyToReply);
 					if(classOfReplyToReply == 'view'){
 						viewReplyToReply(ReplyNumber, HowManyHaveSuper);
 						$('#replyToReply'+ReplyNumber).attr('class','fold');
@@ -314,7 +328,6 @@
 								{articleNumber : articleNumber}		
 							),
 						success : function(result) {
-							console.log(result);
 							if(result == "true") {
 								alert("게시글이 삭제되었습니다.");
 								location.replace("/info/main/board/1");
@@ -346,7 +359,6 @@
 								{replyNumber : replyNumber}		
 							),
 						success : function(result) {
-							console.log(result);
 							if(result == "true") {
 								alert("댓글이 삭제되었습니다.");
 								location.replace("/info/main/board/article/"+articleNumber);
@@ -360,12 +372,20 @@
 						},
 					});	
 				}
+				
+				function onKeyDownLog()
+				{
+				     if(event.keyCode == 13)
+				     {
+				          log();
+				     }
+				}
 					
 					
 	</script>
 <body style="background-color: skyblue;" class="white" id="BODY">
 	<header>
-			<a href="/info/1" style="color: white;
+			<a href="/info" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -383,11 +403,11 @@
 		<div id="logIn">			
 			<script>
 							if(Name == ""){  
-								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
+									var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
 									lines += "<input id='id' type='text' placeholder='ID'><br/>";
-									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
+									lines += "<input id='password' type='password' placeholder='PASSWORD' onKeyDown='onKeyDownLog();'>";
 									lines += "&nbsp; <a href='/info/join'>join us</a>";				
-						   		document.write(lines);
+						   			document.write(lines);
 				      	}
 				        else{
 				        		document.write("안녕하세요 "+ Name + "님" + logoutButton);
@@ -420,26 +440,33 @@
 			<p>
 				<div class="hearty" onclick="like()">
 					<script>
+					 	document.write("<div id='likesNum'>");
 						if(Article["likes"]){
 							var ArticleLikes = Article["likes"];
 							if(ArticleLikes.indexOf(Name) == -1){}
 							else{document.body.className = 'red'}
-							
-							document.write(Article["likes"].length + "&nbsp;"); 
-							
-						}
-					</script>
-				</div>
-					<script>
-						document.write("<div id='likeNames'>");
-						for(var i=0; i<Article["likes"].length; i++){
-							document.write(Article["likes"][i]); 
-							if(i<Article["likes"].length-1){
-								document.write(",&nbsp;");
+							if(Article["likes"] == null){
+							}else{
+								document.write( Article["likes"].length ); 
 							}
 						}
 						document.write("</div>");
 					</script>
+				</div>
+				<script>
+						document.write("<div id='likeNames'>");
+						document.write("&nbsp;");
+						if(Article["likes"] == null){
+						}else{
+							for(var i=0; i<Article["likes"].length; i++){
+								document.write(Article["likes"][i]); 
+								if(i<Article["likes"].length-1){
+									document.write(",&nbsp;");
+								}
+							}
+						}
+						document.write("</div>");
+				</script>
 			</p>
 			<script>
 				function like(){
@@ -449,7 +476,7 @@
 				}
 			</script>
 		</div>
-		<div>
+		<div id='setReplyDiv'>
 			<textarea class='replyDesc' id='replyDesc' placeholder="Comment.."></textarea>
 			<button id='replyButton' onclick='setReply()'>작성</button>
 		</div>

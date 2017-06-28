@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -218,34 +219,81 @@ public class openDataController extends Applet {
 	public String busMain() {
 		return "busMain";
 	}	
-	/*
+	
 	
 	@RequestMapping(value = "/getBusData", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
     public @ResponseBody String getBusData(@RequestBody Map<String, String> reqData) throws UnsupportedEncodingException{
 			
 			String stationName = reqData.get("stationName");
 			stationName = URLEncoder.encode(stationName, "utf-8");
-			
-			String addr = "http://openapi.gbis.go.kr/ws/busarrivalservice?wsdl"+"?ServiceKey=";
-			String serviceKey = "t9HGmBLTVE2rpDHGGR%2F71x%2B%2FOsgyCqUIAMhrRFJIvnMvlzY2qy%2BDZzgVxnB2OZgsmUGycJl3AzRAEezcV%2FiVsA%3D%3D";
-			String parameter = "";
-			
+			String serviceKey = "PFJyYmaXuz%2FE2IV61aPlgeHf%2FQAGqJk0k7Io%2Fti7KWogBSoHwUU04RHS2O14y8XG2m0%2BXHHLomH1bavrz6zd9Q%3D%3D";
 			serviceKey = URLEncoder.encode(serviceKey, "UTF-8");
-			
-			 parameter = parameter + "&" + "stationId=209900003";
-			 parameter = parameter + "&" + "routeId=100100282";
-		
-			addr = addr + serviceKey + parameter;
 	 
-			URL url = new URL(addr);
-			InputStream in = (InputStream) url.openStream(); 
-			CheckedOutputStream bos = new CheckedOutputStream();
-			IOUtils.copy(in, bos);
-			in.close();
-			bos.close();
-			return ((Object) bos).getOut().toString();
+	        String urlPath = "http://openapi.gbis.go.kr/ws/rest/busarrivalservice/station?serviceKey=PFJyYmaXuz%2FE2IV61aPlgeHf%2FQAGqJk0k7Io%2Fti7KWogBSoHwUU04RHS2O14y8XG2m0%2BXHHLomH1bavrz6zd9Q%3D%3D&stationId=200000078";
+	        String pageContents = "";
+	        StringBuilder contents = new StringBuilder();
+	        try{
+	 
+	            URL url = new URL(urlPath);
+	            URLConnection con = (URLConnection)url.openConnection();
+	            InputStreamReader reader = new InputStreamReader (con.getInputStream(), "utf-8");
+	 
+	            BufferedReader buff = new BufferedReader(reader);
+	 
+	            while((pageContents = buff.readLine())!=null){
+	                System.out.println(pageContents);             
+	                contents.append(pageContents);
+	                contents.append("\r\n");
+	            }
+	 
+	            buff.close();
+	 
+	            System.out.println(contents.toString());
+	 
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }
+	        
+	        String str = contents.toString();
+	        
+	        
+	        System.out.println(str);
+	        
+	        return str;
 	 
 	    }
-	*/
+	
+	@RequestMapping(value = "/getBusStationData", produces = { "application/json;charset=UTF-8" }, method = RequestMethod.POST)
+    public @ResponseBody String getBusStationData(@RequestBody Map<String, String> reqData) throws IOException{
+		
+		 StringBuilder urlBuilder = new StringBuilder("http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getSttnNoList"); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("PFJyYmaXuz%2FE2IV61aPlgeHf%2FQAGqJk0k7Io%2Fti7KWogBSoHwUU04RHS2O14y8XG2m0%2BXHHLomH1bavrz6zd9Q%3D%3D","UTF-8") + "=서비스키"); /*Service Key*/
+	        urlBuilder.append("&" + URLEncoder.encode("cityCode","UTF-8") + "=" + URLEncoder.encode("25", "UTF-8"));
+	        urlBuilder.append("&" + URLEncoder.encode("nodeNm","UTF-8") + "=" + URLEncoder.encode("전통시장", "UTF-8"));
+	        urlBuilder.append("&" + URLEncoder.encode("nodeNo","UTF-8") + "=" + URLEncoder.encode("44810", "UTF-8"));/*파라미터설명*/
+	        URL url = new URL(urlBuilder.toString());
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-type", "application/json");
+	        System.out.println("Response code: " + conn.getResponseCode());
+	        BufferedReader rd;
+	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+	        StringBuilder sb = new StringBuilder();
+	        String line;
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	        }
+	        rd.close();
+	        conn.disconnect();
+	        System.out.println(sb.toString());
+	   
+		
+		return sb.toString();
+	}
+	
     
 }

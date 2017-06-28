@@ -34,7 +34,6 @@ body {
 
 #boardList{
 	list-style: none; 
-	font-size: 20px;
 	padding-left: 20px; 
 	color: white;
 }
@@ -53,10 +52,6 @@ body {
 	float: left;
 }
 
-#searchDiv {
-	    margin-left: 710px;
-	
-}
 
 #id {
 	float: right;

@@ -6,8 +6,8 @@
 
 <html>
 <head>
-		<spring:url value="/resources/css/main.css" var="mainCSS" />
-		<link href="${mainCSS}" rel="stylesheet" />
+		<spring:url value="/resources/css/join.css" var="joinCSS" />
+		<link href="${joinCSS}" rel="stylesheet" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<title>seoul life information</title>
@@ -34,6 +34,7 @@
 			),
 			success : function(result) {
 				if(result == "true") {
+					sessionStorage.setItem('name', data3);
 					alert("회원가입이 완료되었습니다.");
 					location.replace("/info/1");
 				} else {
@@ -45,26 +46,29 @@
 			}			
 		});
  	}
+ 	
+ 	function onKeyDownJoin()
+	{
+	     if(event.keyCode == 13)
+	     {
+	          join();
+	     }
+	}
   </script>
   <body>
-  			<header>
-						<h1><a href="/info/1" style="text-decoration:none ">Seoul Life Information</a></h1>
-			</header>
-			<nav style="display: inline;">
-		   			<ul><a href='/info/main/subway'>지하철</a></ul>
-				   <ul><a href='/info/main/bus'>버스</a></ul>
-				   <ul><a href='/info/main/weather'>날씨</a></ul>
-				   <ul><a href='/info/main/dust'>미세먼지</a></ul>
-				   <ul><a href="/info/main/board/1">게시판</a></ul>
-			</nav>
-  <p>ID: <input id='ide' name='id' type='text' placeholder='ID'></p>
-  <p>password: <input id='pass' name='password' type='text' placeholder='PASSWORD'></p>
-  <p>닉네임: <input id='name'  type='text' placeholder='name'></p>
-  <p>생년월일: <input id='birth'  type='text' placeholder='birth'></p>
-  <p>전화번호: <input id='phoneNumber' type='text' placeholder='phoneNumber'></p>
-  <p>집 주소: <input id='address' type='text' placeholder='address'></p>
-  <input type='button' value='done' onclick="join();">
-  
+			
+			<div id='joinDiv'>
+				  <h1><a href="/info" style="text-decoration:none ">Seoul Life Information</a></h1>
+				  <p> <input class='INPUT' id='ide' name='id' type='text' placeholder='ID'></p>
+				  <p> <input class='INPUT' id='pass' name='password' type='password' placeholder='PASSWORD'></p>
+				  <p><input class='INPUT' id='name'  type='text' placeholder='name'></p>
+				  <p><input class='INPUT' id='birth'  type='text' placeholder='birth'></p>
+				  <p> <input class='INPUT' id='phoneNumber' type='text' placeholder='phoneNumber'></p>
+				  <p><input class='INPUT' id='address' type='text' placeholder='address' onkeydown='onKeyDownJoin();'></p>
+				  <input id='joinButton' type='button' value='JOIN!' onclick="join();">
+  			</div>
+  			
+  			
   </body>
 </html>
 

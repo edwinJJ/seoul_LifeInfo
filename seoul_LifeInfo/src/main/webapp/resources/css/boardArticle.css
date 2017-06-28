@@ -344,3 +344,7 @@ body.red div.hearty::after {
 	color:black;
 	cursor:pointer;
 }
+
+#setReplyDiv {
+	margin-top: 50px;
+}

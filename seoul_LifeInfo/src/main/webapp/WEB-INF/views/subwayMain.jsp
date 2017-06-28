@@ -37,7 +37,6 @@
 											{id : data1, password : data2}		
 										),
 										success : function(result) {
-											console.log(result);
 											if(result==null || result==""){
 												location.replace("/info/logError"); 
 											}else{
@@ -88,11 +87,28 @@
 							}
 				});	
 					}
+					
+					
+					function onKeyDownStation()
+					{
+					     if(event.keyCode == 13)
+					     {
+					          getSubwayData();
+					     }
+					}
+					
+					function onKeyDownLog()
+					{
+					     if(event.keyCode == 13)
+					     {
+					          log();
+					     }
+					}
 													
 	</script>
 <body >
 	<header>
-			<a href="/info/1" style="color: white;
+			<a href="/info" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -111,10 +127,10 @@
 			<script>
 							if(Name == ""){  
 								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
-									lines += "<input id='id' type='text' placeholder='ID'><br/>";
-									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
-									lines += "&nbsp; <a href='/info/join'>join us</a>";				
-						   		document.write(lines);
+								lines += "<input id='id' type='text' placeholder='ID'><br/>";
+								lines += "<input id='password' type='password' placeholder='PASSWORD' onKeyDown='onKeyDownLog();'>";
+								lines += "&nbsp; <a href='/info/join'>join us</a>";				
+					   		document.write(lines);
 				      	}
 				        else{
 				        		document.write("안녕하세요 "+ Name + "님" + logoutButton);
@@ -124,7 +140,7 @@
 		<h1 style='font-family: fantasy;'>SUBWAY INFORMATION</h1>
 		<div id='subwaySearchDiv'>
 			<h3 style='color: white;'>역이름으로 검색</h3>
-				<input type='text' id='stationName' placeholder='STATION NAME'>
+				<input type='text' id='stationName' placeholder='STATION NAME' onkeydown='onKeyDownStation();'>
 				<input id='searchButton' type='button' value='검색' onclick='getSubwayData()'>
 				<div id='data' style='display: none;'></div>
 				<div id='realData'></div>

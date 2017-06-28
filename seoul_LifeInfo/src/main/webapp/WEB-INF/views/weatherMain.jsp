@@ -37,7 +37,6 @@
 											{id : data1, password : data2}		
 										),
 										success : function(result) {
-											console.log(result);
 											if(result==null || result==""){
 												location.replace("/info/logError"); 
 											}else{
@@ -78,41 +77,41 @@
 								var mm = today.getMonth()+1; //January is 0!
 								var yyyy = today.getFullYear()
 								
-								var lines = "<h1>"+$("category").text()+"</h1>";
+								var weatherLines = "<h1>"+$("category").text()+"</h1>";
 								for(var i=0; i< $("data").length ; i++){
 										var dd = today.getDate();
 										dd = dd + parseInt($("data").eq(i).children("day").text());
-										lines += "<div>" 
-										lines += "<span class='weatherDesc'>"
-										lines += "<span style='color: white;'>" +yyyy+"년 "+mm+"월 "+dd+"일 "
-										lines += $("data").eq(i).children("hour").text() +"시 "+ "</span>" + "&nbsp;" 
-										lines += $("data").eq(i).children("temp").text() +"℃"+ "&nbsp;" 
-										lines += $("data").eq(i).children("wfKor").text() 
-										lines += "</span>"
-										lines += "&nbsp;"	
-									
-										if($("data").eq(i).children("wfKor").text() == "구름 많음"){
-											lines += "<img class='weatherImg' src='/info/resources/images/구름 많음.jpg'>"
-										}
-										if($("data").eq(i).children("wfKor").text() == "흐림"){
-											lines += "<img class='weatherImg' src='/info/resources/images/흐림.jpg'>"
-										}
-										if($("data").eq(i).children("wfKor").text() == "비"){
-											lines += "<img class='weatherImg' src='/info/resources/images/비.jpg'>"
-										}
-										if($("data").eq(i).children("wfKor").text() == "맑음"){
-											lines += "<img class='weatherImg' src='/info/resources/images/맑음.jpg'>"
-										}
-										if($("data").eq(i).children("wfKor").text() == "구름 조금"){
-											lines += "<img class='weatherImg' src='/info/resources/images/구름 조금.jpg'>"
-										}
-										if($("data").eq(i).children("wfKor").text() == "눈"){
-											lines += "<img class='weatherImg' src='/info/resources/images/눈.jpg'>"
-										}
-										lines += "</div>"
+										weatherLines += "<div>" 
+										weatherLines += "<span class='weatherDesc'>"
+										weatherLines += "<span style='color: white;'>" +yyyy+"년 "+mm+"월 "+dd+"일 "
+										weatherLines += $("data").eq(i).children("hour").text() +"시 "+ "</span>" + "&nbsp;" 
+										weatherLines += $("data").eq(i).children("temp").text() +"℃"+ "&nbsp;" 
+										weatherLines += $("data").eq(i).children("wfKor").text() 
+										weatherLines += "</span>"
+										weatherLines += "&nbsp;"	
+								
+											if($("data").eq(i).children("wfKor").text() == "구름 많음"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/구름 많음.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "흐림"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/흐림.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "비"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/비.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "맑음"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/맑음.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "구름 조금"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/구름 조금.jpg'>"
+											}
+											if($("data").eq(i).children("wfKor").text() == "눈"){
+												weatherLines += "<img class='weatherImg' src='/info/resources/images/눈.jpg'>"
+											}
+											weatherLines += "</div>"
 								}	
 								
-								$("#realWeather").html(lines);
+								$("#realWeather").html(weatherLines);
 							},
 							error : function(result){
 								console.log(result);
@@ -120,11 +119,20 @@
 							}
 					});	
 				}getWeatherData();
+				
+				
+				function onKeyDownLog()
+				{
+				     if(event.keyCode == 13)
+				     {
+				          log();
+				     }
+				}
 													
 	</script>
 <body>
 	<header>
-			<a href="/info/1" style="color: white;
+			<a href="/info" style="color: white;
 								   font-family: fantasy;
 								   font-size: 50px; 	
 								   text-decoration:none;
@@ -143,10 +151,10 @@
 			<script>
 							if(Name == ""){  
 								var	lines = "<input class='logButton' type='button' value='log in' onclick='log();'>";
-									lines += "<input id='id' type='text' placeholder='ID'><br/>";
-									lines += "<input id='password' type='text' placeholder='PASSWORD'>";
-									lines += "&nbsp; <a href='/info/join'>join us</a>";				
-						   		document.write(lines);
+								lines += "<input id='id' type='text' placeholder='ID'><br/>";
+								lines += "<input id='password' type='password' placeholder='PASSWORD' onKeyDown='onKeyDownLog();'>";
+								lines += "&nbsp; <a href='/info/join'>join us</a>";				
+					   		document.write(lines);
 				      	}
 				        else{
 				        		document.write("안녕하세요 "+ Name + "님" + logoutButton);
