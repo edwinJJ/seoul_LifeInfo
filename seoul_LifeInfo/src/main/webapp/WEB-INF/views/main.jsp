@@ -178,8 +178,6 @@
 										var condition;
 										var conditionColor;
 										
-										console.log(parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text()) + 10 );
-										
 										if(parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text()) < 30){condition='좋음'; conditionColor='blue';}
 										else if((30 <= parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text())) && (parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text())< 80)){condition = '보통'; conditionColor='green';}
 										else if((80 <= parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text())) && (parseInt($("#dustData").children("DailyAverageAirQuality").children("row").eq(i).children("PM10").text())< 150)){condition = '나쁨'; conditionColor='orange'}

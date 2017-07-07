@@ -73,7 +73,6 @@ public class openDataController extends Applet {
 			
 			String stationName = reqData.get("stationName");
 			stationName = URLEncoder.encode(stationName, "utf-8");
-			System.out.println(stationName);
 	 
 	        String urlPath = "http://swopenapi.seoul.go.kr/api/subway/sample/xml/realtimeStationArrival/1/5/"+stationName+"/";
 	        String pageContents = "";
@@ -87,14 +86,11 @@ public class openDataController extends Applet {
 	            BufferedReader buff = new BufferedReader(reader);
 	 
 	            while((pageContents = buff.readLine())!=null){
-	                //System.out.println(pageContents);             
 	                contents.append(pageContents);
 	                contents.append("\r\n");
 	            }
 	 
 	            buff.close();
-	 
-	            System.out.println(contents.toString());
 	 
 	        }catch(Exception e){
 	            e.printStackTrace();
@@ -103,7 +99,6 @@ public class openDataController extends Applet {
 	        String str = contents.toString();
 	        
 	        
-	        System.out.println(str);
 	        
 	        return str;
 	 
@@ -126,7 +121,6 @@ public class openDataController extends Applet {
 			
 			String location = reqData.get("weather");
 			location = URLEncoder.encode(location, "utf-8");
-			System.out.println(location);
 	 
 	        String urlPath = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4113556000";
 	        String pageContents = "";
@@ -140,14 +134,12 @@ public class openDataController extends Applet {
 	            BufferedReader buff = new BufferedReader(reader);
 	 
 	            while((pageContents = buff.readLine())!=null){
-	                //System.out.println(pageContents);             
 	                contents.append(pageContents);
 	                contents.append("\r\n");
 	            }
 	 
 	            buff.close();
 	 
-	            System.out.println(contents.toString());
 	 
 	        }catch(Exception e){
 	            e.printStackTrace();
@@ -155,8 +147,6 @@ public class openDataController extends Applet {
 	        
 	        String str = contents.toString();
 	        
-	        
-	        System.out.println(str);
 	        
 	        return str;
 	 
@@ -178,7 +168,6 @@ public class openDataController extends Applet {
 			String date = reqData.get("date");
 			String location = reqData.get("location");
 			location = URLEncoder.encode(location, "utf-8");
-			System.out.println(location);
 	 
 	        String urlPath = "http://openapi.seoul.go.kr:8088/sample/xml/DailyAverageAirQuality/1/5/"+date+"/"+location+"/";
 	        String pageContents = "";
@@ -192,14 +181,12 @@ public class openDataController extends Applet {
 	            BufferedReader buff = new BufferedReader(reader);
 	 
 	            while((pageContents = buff.readLine())!=null){
-	                //System.out.println(pageContents);             
 	                contents.append(pageContents);
 	                contents.append("\r\n");
 	            }
 	 
 	            buff.close();
 	 
-	            System.out.println(contents.toString());
 	 
 	        }catch(Exception e){
 	            e.printStackTrace();
@@ -207,8 +194,6 @@ public class openDataController extends Applet {
 	        
 	        String str = contents.toString();
 	        
-	        
-	        System.out.println(str);
 	        
 	        return str;
 	 
@@ -241,14 +226,12 @@ public class openDataController extends Applet {
 	            BufferedReader buff = new BufferedReader(reader);
 	 
 	            while((pageContents = buff.readLine())!=null){
-	                System.out.println(pageContents);             
 	                contents.append(pageContents);
 	                contents.append("\r\n");
 	            }
 	 
 	            buff.close();
 	 
-	            System.out.println(contents.toString());
 	 
 	        }catch(Exception e){
 	            e.printStackTrace();
@@ -257,7 +240,6 @@ public class openDataController extends Applet {
 	        String str = contents.toString();
 	        
 	        
-	        System.out.println(str);
 	        
 	        return str;
 	 
@@ -275,7 +257,6 @@ public class openDataController extends Applet {
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Content-type", "application/json");
-	        System.out.println("Response code: " + conn.getResponseCode());
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -289,7 +270,6 @@ public class openDataController extends Applet {
 	        }
 	        rd.close();
 	        conn.disconnect();
-	        System.out.println(sb.toString());
 	   
 		
 		return sb.toString();
